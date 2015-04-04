@@ -14,6 +14,7 @@
 
 use std::ops::{Add, Div, Mul, Sub};
 
+/// Vector with three f32 components
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vec3f {
     pub x: f32,
@@ -40,15 +41,24 @@ impl CastF32 for u8  { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for u16 { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for u32 { fn as_f32(&self) -> f32 { *self as f32 } }
 
+/// Create a Vec3f from x, y, and z inputs
+///
+/// This is a convenience function that provides a little more
+/// flexibility than Vec3f::new in that it will happily take numbers
+/// that aren't f32 (including a mix of different types for each
+/// component). Vec3f is such a common type that it seems reasonable
+/// to provide a little extra ease of use.
 pub fn vec3f<X: CastF32, Y: CastF32, Z: CastF32>(x: X, y: Y, z: Z) -> Vec3f {
     Vec3f { x: x.as_f32(), y: y.as_f32(), z: z.as_f32() }
 }
 
+/// Inner product of two Vec3f inputs
 pub fn dot3(a: Vec3f, b: Vec3f) -> f32 {
     let v = a * b;
     v.x + v.y + v.z
 }
 
+/// Cross product of two Vec3f inputs
 pub fn cross(a: Vec3f, b: Vec3f) -> Vec3f {
     Vec3f::new(a.y * b.z - a.z * b.y,
                a.z * b.x - a.x * b.z,

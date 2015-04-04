@@ -14,6 +14,7 @@
 
 use vector;
 
+/// Sphere represented by a center and radius
 pub struct Sphere3f {
     pub center: vector::Vec3f,
     pub radius: f32
