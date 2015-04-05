@@ -30,6 +30,13 @@ impl Aabb3f {
         }
     }
 
+    pub fn from_point(point: Vec3f) -> Aabb3f {
+        Aabb3f {
+            min: point,
+            max: point
+        }
+    }
+
     /// True if the point intersects the box
     pub fn contains_point(&self, point: Vec3f) -> bool {
         (self.min.x <= point.x &&
@@ -46,4 +53,5 @@ impl Aabb3f {
 fn test_aabb3f_contains_point() {
     use vector::ZERO_3F;
     assert!(!Aabb3f::new().contains_point(ZERO_3F));
+    assert!(Aabb3f::from_point(ZERO_3F).contains_point(ZERO_3F));
 }
