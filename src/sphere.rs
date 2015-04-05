@@ -31,9 +31,24 @@ impl Sphere3f {
             radius: radius
         }
     }
+
+    pub fn from_radius(radius: f32) -> Sphere3f {
+        Sphere3f::new(vector::ZERO_3F, radius)
+    }
+
+    pub fn radius_squared(&self) -> f32 {
+        self.radius * self.radius
+    }
 }
 
 #[test]
 fn test_sphere3f_create() {
     Sphere3f::new(vector::vec3f(1, 2, 3), 4.0);
+    Sphere3f::from_radius(1.0);
+}
+
+#[test]
+fn test_sphere3f_radius_squared() {
+    let r = 2.2f32;
+    assert!(Sphere3f::from_radius(r).radius_squared() == (r * r));
 }
