@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Segment3f","Line segment between two points"]]});
