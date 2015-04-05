@@ -74,12 +74,20 @@ impl Segment3f {
 #[test]
 fn test_segment_length() {
     use vector::vec3f;
-    let l = Segment3f::new(&vec3f(0, 0, 0),
+    let s = Segment3f::new(&vec3f(0, 0, 0),
                            &vec3f(0, 0, 9));
-    assert!(l.length() == 9.0);
+    assert!(s.length() == 9.0);
 }
 
 #[test]
 fn test_segment_closest_point_to_point() {
-    
+    use vector::vec3f;
+    let s = Segment3f::new(&vec3f(2, 0, 0),
+                           &vec3f(3, 0, 0));
+    assert!(s.closest_point_to_point(&vec3f(1, 0, 0)) ==
+            (0.0, vec3f(2, 0, 0)));
+    assert!(s.closest_point_to_point(&vec3f(4, 0, 0)) ==
+            (1.0, vec3f(3, 0, 0)));
+    assert!(s.closest_point_to_point(&vec3f(2.5, 1, 0)) ==
+            (0.5, vec3f(2.5, 0, 0)));
 }
