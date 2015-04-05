@@ -1,6 +1,6 @@
 # Dumbmath
 
-![](https://travis-ci.org/nicholasbishop/dumbmath-rs.svg?branch=master)
+[![](https://travis-ci.org/nicholasbishop/dumbmath-rs.svg?branch=master)](https://travis-ci.org/nicholasbishop/dumbmath-rs)
 
 This package is a Rust experiment in making a pretty dumb math library
 oriented towards computer graphics. By dumb I mean that it's a bit
