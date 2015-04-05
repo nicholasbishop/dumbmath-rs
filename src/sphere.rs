@@ -21,6 +21,9 @@ pub struct Sphere3f {
     pub radius: f32
 }
 
+/// Sphere centered at (0.0, 0.0, 0.0) with a radius of 1.0
+pub const UNIT: Sphere3f = Sphere3f { center: vector::ZERO_3F, radius: 1.0 };
+
 impl Sphere3f {
     pub fn new(center: vector::Vec3f, radius: f32) -> Sphere3f {
         Sphere3f {
