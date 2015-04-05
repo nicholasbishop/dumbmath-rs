@@ -105,6 +105,10 @@ fn test_intersect_sphere_triangle() {
         vec3f(0, 0, 0),
         vec3f(1, 0, 0),
         vec3f(0, 1, 0)];
-    assert!(intersect_sphere_triangle(&sphere::UNIT, triangle) ==
-            Some(ZERO_3F));
+
+    assert!(intersect_sphere_triangle(&sphere::UNIT,
+                                      triangle) == Some(ZERO_3F));
+
+    assert!(intersect_sphere_triangle(&Sphere3f::new(vec3f(10, 10, 10), 1.0),
+                                      triangle) == None);
 }
