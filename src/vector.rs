@@ -37,6 +37,14 @@ impl Vec3f {
             z: f
         }
     }
+
+    pub fn magnitude_squared(&self) -> f32 {
+        dot3(*self, *self)
+    }
+
+    pub fn magnitude(&self) -> f32 {
+        self.magnitude_squared().sqrt()
+    }
 }
 
 /// Vec3f(0.0, 0.0, 0.0)
@@ -116,6 +124,13 @@ impl Sub for Vec3f {
 fn test_vec3f_create() {
     vec3f(1.0f32, 2, 3i32);
     assert!(Vec3f::from_scalar(1) == vec3f(1, 1, 1));
+}
+
+#[test]
+fn test_vec3f_magnitude() {
+    let v = vec3f(-4, 0, 0);
+    assert!(v.magnitude_squared() == 16.0);
+    assert!(v.magnitude() == 4.0);
 }
 
 #[test]
