@@ -85,6 +85,11 @@ pub fn cross(a: Vec3f, b: Vec3f) -> Vec3f {
                a.x * b.y - a.y * b.x)
 }
 
+/// Distance between two vectors
+pub fn distance3(a: Vec3f, b: Vec3f) -> f32 {
+    (a - b).magnitude()
+}
+
 impl Add for Vec3f {
     type Output = Vec3f;
     fn add(self, v: Vec3f) -> Vec3f {
@@ -131,6 +136,11 @@ fn test_vec3f_magnitude() {
     let v = vec3f(-4, 0, 0);
     assert!(v.magnitude_squared() == 16.0);
     assert!(v.magnitude() == 4.0);
+}
+
+#[test]
+fn test_vec3f_distance3() {
+    assert!(distance3(vec3f(0, -4, 0), vec3f(0, 4, 0)) == 8.0);
 }
 
 #[test]
