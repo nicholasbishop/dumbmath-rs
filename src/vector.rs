@@ -90,6 +90,16 @@ pub fn distance3(a: Vec3f, b: Vec3f) -> f32 {
     (a - b).magnitude()
 }
 
+/// Linearly interpolate between two points by the factor `t`. When
+/// `t` is zero the result is `p0`, and when `t` is one the result is
+/// `p1`. The range of `t` is not clamped.
+pub fn lerp3(p0: &Vec3f, p1: &Vec3f, t: f32) -> Vec3f {
+    let n = 1.0 - t;
+    Vec3f::new(p0.x * n + p1.x * t,
+               p0.y * n + p1.y * t,
+               p0.z * n + p1.z * t)
+}
+
 impl Add for Vec3f {
     type Output = Vec3f;
     fn add(self, v: Vec3f) -> Vec3f {
@@ -139,7 +149,7 @@ fn test_vec3f_magnitude() {
 }
 
 #[test]
-fn test_vec3f_distance3() {
+fn test_vec3f_distance() {
     assert!(distance3(vec3f(0, -4, 0), vec3f(0, 4, 0)) == 8.0);
 }
 
@@ -161,4 +171,14 @@ fn test_vec3f_dot() {
 #[test]
 fn test_vec3f_cross() {
     assert!(cross(vec3f(1, 0, 0), vec3f(0, 1, 0)) == vec3f(0, 0, 1));
+}
+
+#[test]
+fn test_vec3f_lerp() {
+    let p0 = vec3f(1.0, 2.0, 3.0);
+    let p1 = vec3f(-1.0, -2.0, -3.0);
+    assert!(lerp3(&p0, &p1, 0.0) == p0);
+    assert!(lerp3(&p0, &p1, 0.25) == vec3f(0.5, 1.0, 1.5));
+    assert!(lerp3(&p0, &p1, 0.5) == vec3f(0.0, 0.0, 0.0));
+    assert!(lerp3(&p0, &p1, 1.0) == p1);
 }
