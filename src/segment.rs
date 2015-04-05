@@ -33,6 +33,7 @@ impl Segment3f {
         }
     }
 
+    /// Length of the line segment
     pub fn length(&self) -> f32 {
         distance3(self.start, self.end)
     }
