@@ -38,6 +38,13 @@ impl Segment3f {
         distance3(self.start, self.end)
     }
 
+    /// Convert a distance in coordinate space to a distance in the
+    /// line segment's parametric space. The sign of the input is
+    /// kept.
+    pub fn distance_to_parametric_delta(&self, distance: f32) -> f32 {
+        distance / self.length()
+    }
+
     /// Find the point on the segment closest to the input point. The
     /// return value contains both the parametric and actual location
     /// of the closest point.
@@ -78,6 +85,17 @@ fn test_segment_length() {
     let s = Segment3f::new(&vec3f(0, 0, 0),
                            &vec3f(0, 0, 9));
     assert!(s.length() == 9.0);
+}
+
+#[test]
+fn test_segment_distance_to_parametric_delta() {
+    use vector::vec3f;
+    let s = Segment3f::new(&vec3f(0, 1, 0),
+                           &vec3f(0, 7, 0));
+    assert!(s.distance_to_parametric_delta(0.0) == 0.0);
+    assert!(s.distance_to_parametric_delta(6.0) == 1.0);
+    assert!(s.distance_to_parametric_delta(12.0) == 2.0);
+    assert!(s.distance_to_parametric_delta(-3.0) == -0.5);
 }
 
 #[test]
