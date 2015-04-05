@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Vec3f","Vector with three f32 components"]],"fn":[["cross","Cross product of two Vec3f inputs"],["distance3","Distance between two points"],["dot3","Inner product of two Vec3f inputs"],["vec3f","Create a Vec3f from x, y, and z inputs"]],"trait":[["CastF32",""]],"constant":[["ZERO_3F","Vec3f(0.0, 0.0, 0.0)"]]});
