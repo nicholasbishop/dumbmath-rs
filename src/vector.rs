@@ -30,6 +30,9 @@ impl Vec3f {
     }
 }
 
+/// Vec3f(0.0, 0.0, 0.0)
+pub const ZERO_3F: Vec3f = Vec3f { x: 0.0, y: 0.0, z: 0.0 };
+
 pub trait CastF32 { fn as_f32(&self) -> f32; }
 
 impl CastF32 for f32 { fn as_f32(&self) -> f32 { *self } }
