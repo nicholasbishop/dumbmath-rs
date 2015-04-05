@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+pub mod aabb;
 pub mod intersect;
 pub mod sphere;
 pub mod vector;
