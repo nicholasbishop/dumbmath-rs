@@ -1,6 +1,10 @@
 [package]
 name = "dumbmath"
-version = "0.0.1"
 authors = ["Nicholas Bishop <nicholasbishop@gmail.com>"]
-readme = "README.md"
+description = "A pretty dumb math library oriented towards computer graphics"
+homepage = "https://github.com/nicholasbishop/dumbmath-rs"
+keywords = ["aabb", "graphics", "intersection", "math", "vector"]
 license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/nicholasbishop/dumbmath-rs"
+version = "0.0.1"
