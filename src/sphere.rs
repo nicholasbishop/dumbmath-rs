@@ -15,6 +15,7 @@
 use vector;
 
 /// Sphere represented by a center and radius
+#[derive(Clone, Copy, PartialEq)]
 pub struct Sphere3f {
     pub center: vector::Vec3f,
     pub radius: f32
