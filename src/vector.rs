@@ -85,7 +85,7 @@ pub fn cross(a: Vec3f, b: Vec3f) -> Vec3f {
                a.x * b.y - a.y * b.x)
 }
 
-/// Distance between two vectors
+/// Distance between two points
 pub fn distance3(a: Vec3f, b: Vec3f) -> f32 {
     (a - b).magnitude()
 }
