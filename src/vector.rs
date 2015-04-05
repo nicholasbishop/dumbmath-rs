@@ -23,10 +23,19 @@ pub struct Vec3f {
 }
 
 impl Vec3f {
-    fn new(x: f32, y: f32, z: f32) -> Vec3f {
+    pub fn new(x: f32, y: f32, z: f32) -> Vec3f {
         Vec3f { x: x,
                 y: y,
                 z: z }
+    }
+
+    pub fn from_scalar<T: CastF32>(s: T) -> Vec3f {
+        let f = s.as_f32();
+        Vec3f {
+            x: f,
+            y: f,
+            z: f
+        }
     }
 }
 
@@ -106,6 +115,7 @@ impl Sub for Vec3f {
 #[test]
 fn test_vec3f_create() {
     vec3f(1.0f32, 2, 3i32);
+    assert!(Vec3f::from_scalar(1) == vec3f(1, 1, 1));
 }
 
 #[test]
