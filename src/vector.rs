@@ -82,10 +82,17 @@ impl Div for Vec3f {
     }
 }
 
-impl Mul for Vec3f {
+impl Mul<Vec3f> for Vec3f {
     type Output = Vec3f;
     fn mul(self, v: Vec3f) -> Vec3f {
         Vec3f::new(self.x * v.x, self.y * v.y, self.z * v.z)
+    }
+}
+
+impl Mul<f32> for Vec3f {
+    type Output = Vec3f;
+    fn mul(self, f: f32) -> Vec3f {
+        Vec3f::new(self.x * f, self.y * f, self.z * f)
     }
 }
 
