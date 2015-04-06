@@ -36,6 +36,7 @@ impl<T: Copy + PartialOrd> InclusiveRange<T> {
         InclusiveRange { min: min, max: max }
     }
 
+    /// Expand `self` as needed to include another range.
     pub fn expand(&mut self, other: &InclusiveRange<T>) {
         self.min = pomin(self.min, other.min);
         self.max = pomax(self.max, other.max);
