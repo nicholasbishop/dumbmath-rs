@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["aabb",""],["intersect",""],["segment",""],["sphere",""],["vector",""]]});
+initSidebarItems({"mod":[["aabb",""],["intersect",""],["range",""],["segment",""],["sphere",""],["vector",""]]});
