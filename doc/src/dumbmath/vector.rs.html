@@ -224,6 +224,11 @@
 <span id="182">182</span>
 <span id="183">183</span>
 <span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -250,12 +255,14 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>Vec3f</span> {
+    <span class='doccomment'>/// Create a Vec3f from three components</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>x</span>: <span class='ident'>f32</span>, <span class='ident'>y</span>: <span class='ident'>f32</span>, <span class='ident'>z</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
         <span class='ident'>Vec3f</span> { <span class='ident'>x</span>: <span class='ident'>x</span>,
                 <span class='ident'>y</span>: <span class='ident'>y</span>,
                 <span class='ident'>z</span>: <span class='ident'>z</span> }
     }
 
+    <span class='doccomment'>/// Create a Vec3f with all components set to the same scalar</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_scalar</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>CastF32</span><span class='op'>&gt;</span>(<span class='ident'>s</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
         <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>as_f32</span>();
         <span class='ident'>Vec3f</span> {
@@ -265,10 +272,12 @@
         }
     }
 
+    <span class='doccomment'>/// Squared length of the vector</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>magnitude_squared</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='ident'>dot3</span>(<span class='op'>*</span><span class='self'>self</span>, <span class='op'>*</span><span class='self'>self</span>)
     }
 
+    <span class='doccomment'>/// Length of the vector</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>magnitude</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='self'>self</span>.<span class='ident'>magnitude_squared</span>().<span class='ident'>sqrt</span>()
     }
@@ -277,6 +286,7 @@
 <span class='doccomment'>/// Vec3f(0.0, 0.0, 0.0)</span>
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>ZERO_3F</span>: <span class='ident'>Vec3f</span> <span class='op'>=</span> <span class='ident'>Vec3f</span> { <span class='ident'>x</span>: <span class='number'>0.0</span>, <span class='ident'>y</span>: <span class='number'>0.0</span>, <span class='ident'>z</span>: <span class='number'>0.0</span> };
 
+<span class='doccomment'>/// Convert a numeric type to an f32</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>CastF32</span> { <span class='kw'>fn</span> <span class='ident'>as_f32</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span>; }
 
 <span class='kw'>impl</span> <span class='ident'>CastF32</span> <span class='kw'>for</span> <span class='ident'>f32</span> { <span class='kw'>fn</span> <span class='ident'>as_f32</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> { <span class='op'>*</span><span class='self'>self</span> } }
