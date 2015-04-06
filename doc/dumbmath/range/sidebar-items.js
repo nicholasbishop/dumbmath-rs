@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["range_clamp","Create range covering the overlap between two ranges, or None if there is no overlap."]],"struct":[["InclusiveRange","Inclusive range from min to max"]]});
+initSidebarItems({"constant":[["RANGE_0_1_F32",""]],"struct":[["InclusiveRange","Inclusive range from min to max"]],"fn":[["range_clamp","Create range covering the overlap between two ranges, or None if there is no overlap."]]});
