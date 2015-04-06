@@ -23,12 +23,14 @@ pub struct Vec3f {
 }
 
 impl Vec3f {
+    /// Create a Vec3f from three components
     pub fn new(x: f32, y: f32, z: f32) -> Vec3f {
         Vec3f { x: x,
                 y: y,
                 z: z }
     }
 
+    /// Create a Vec3f with all components set to the same scalar
     pub fn from_scalar<T: CastF32>(s: T) -> Vec3f {
         let f = s.as_f32();
         Vec3f {
@@ -38,10 +40,12 @@ impl Vec3f {
         }
     }
 
+    /// Squared length of the vector
     pub fn magnitude_squared(&self) -> f32 {
         dot3(*self, *self)
     }
 
+    /// Length of the vector
     pub fn magnitude(&self) -> f32 {
         self.magnitude_squared().sqrt()
     }
@@ -50,6 +54,7 @@ impl Vec3f {
 /// Vec3f(0.0, 0.0, 0.0)
 pub const ZERO_3F: Vec3f = Vec3f { x: 0.0, y: 0.0, z: 0.0 };
 
+/// Convert a numeric type to an f32
 pub trait CastF32 { fn as_f32(&self) -> f32; }
 
 impl CastF32 for f32 { fn as_f32(&self) -> f32 { *self } }

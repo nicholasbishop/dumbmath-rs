@@ -26,6 +26,7 @@ pub struct Segment3f {
 }
 
 impl Segment3f {
+    /// Create a segment between two points
     pub fn new(start: &Vec3f, end: &Vec3f) -> Segment3f {
         Segment3f {
             start: *start,

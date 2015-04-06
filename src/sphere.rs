@@ -25,6 +25,7 @@ pub struct Sphere3f {
 pub const UNIT: Sphere3f = Sphere3f { center: vector::ZERO_3F, radius: 1.0 };
 
 impl Sphere3f {
+    /// Create a Sphere3f from center point and radius
     pub fn new(center: vector::Vec3f, radius: f32) -> Sphere3f {
         Sphere3f {
             center: center,
@@ -32,10 +33,12 @@ impl Sphere3f {
         }
     }
 
+    /// Create a Sphere3f centered at zero with given radius
     pub fn from_radius(radius: f32) -> Sphere3f {
         Sphere3f::new(vector::ZERO_3F, radius)
     }
 
+    /// Squared radius of the sphere
     pub fn radius_squared(&self) -> f32 {
         self.radius * self.radius
     }
