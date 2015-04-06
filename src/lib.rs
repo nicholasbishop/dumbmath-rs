@@ -14,6 +14,7 @@
 
 pub mod aabb;
 pub mod intersect;
+pub mod range;
 pub mod segment;
 pub mod sphere;
 pub mod vector;
