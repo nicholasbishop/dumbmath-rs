@@ -21,11 +21,24 @@ pub struct InclusiveRange<T: Copy + PartialOrd> {
 
 pub const RANGE_0_1_F32: InclusiveRange<f32> = InclusiveRange { min: 0.0, max: 0.0 };
 
+fn pomax<T: PartialOrd>(a: T, b: T) -> T {
+    if a > b { a } else { b }
+}
+
+fn pomin<T: PartialOrd>(a: T, b: T) -> T {
+    if a < b { a } else { b }
+}
+
 impl<T: Copy + PartialOrd> InclusiveRange<T> {
     /// Create an InclusiveRange range from min to max
     pub fn new(min: T, max: T) -> InclusiveRange<T> {
         assert!(min <= max);
         InclusiveRange { min: min, max: max }
+    }
+
+    pub fn expand(&mut self, other: &InclusiveRange<T>) {
+        self.min = pomin(self.min, other.min);
+        self.max = pomax(self.max, other.max);
     }
 }
 
@@ -34,8 +47,8 @@ impl<T: Copy + PartialOrd> InclusiveRange<T> {
 pub fn range_clamp<T: Copy + PartialOrd>(a: &InclusiveRange<T>,
                                          b: &InclusiveRange<T>)
                                          -> Option<InclusiveRange<T>> {
-    let min = if a.min > b.min { a.min } else { b.min };
-    let max = if a.max < b.max { a.max } else { b.max };
+    let min = pomax(a.min, b.min);
+    let max = pomin(a.max, b.max);
 
     if min <= max {
         Some(InclusiveRange::new(min, max))
@@ -70,4 +83,11 @@ fn test_range_clamp() {
     assert!(range_clamp(&InclusiveRange::new(1.0, 3.0),
                         &InclusiveRange::new(0.0, 2.0)) ==
             Some(InclusiveRange::new(1.0, 2.0)));
+}
+
+#[test]
+fn test_range_expand() {
+    let mut r = InclusiveRange::new(0, 1);
+    r.expand(&InclusiveRange::new(-1, 2));
+    assert!(r == InclusiveRange::new(-1, 2));
 }
