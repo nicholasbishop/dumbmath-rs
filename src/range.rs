@@ -99,3 +99,10 @@ fn test_range_expand() {
     r.expand(&InclusiveRange::new(-1, 2));
     assert!(r == InclusiveRange::new(-1, 2));
 }
+
+#[test]
+fn test_range_combine() {
+    assert!(range_combine(&InclusiveRange::new(0, 2),
+                          &InclusiveRange::new(-2, 1)) ==
+            InclusiveRange::new(-2, 2));
+}
