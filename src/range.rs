@@ -58,6 +58,13 @@ pub fn range_clamp<T: Copy + PartialOrd>(a: &InclusiveRange<T>,
     }
 }
 
+/// Create range covering both ranges (and any gap between them).
+pub fn range_combine<T: Copy + PartialOrd>(a: &InclusiveRange<T>,
+                                           b: &InclusiveRange<T>) -> InclusiveRange<T> {
+    InclusiveRange::new(pomin(a.min, b.min),
+                        pomax(a.max, b.max))
+}
+
 #[test]
 fn test_range_clamp() {
     assert!(range_clamp(&InclusiveRange::new(0, 2),
