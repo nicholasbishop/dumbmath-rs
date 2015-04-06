@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use std::cmp;
-
 /// Inclusive range from min to max
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct InclusiveRange<T: Copy + Ord> {
+pub struct InclusiveRange<T: Copy + PartialOrd> {
     pub min: T,
     pub max: T
 }
 
-impl<T: Copy + Ord> InclusiveRange<T> {
+pub const RANGE_0_1_F32: InclusiveRange<f32> = InclusiveRange { min: 0.0, max: 0.0 };
+
+impl<T: Copy + PartialOrd> InclusiveRange<T> {
     /// Create an InclusiveRange range from min to max
     pub fn new(min: T, max: T) -> InclusiveRange<T> {
         assert!(min <= max);
@@ -31,13 +31,13 @@ impl<T: Copy + Ord> InclusiveRange<T> {
 
 /// Create range covering the overlap between two ranges, or None if
 /// there is no overlap.
-pub fn range_clamp<T: Copy + Ord>(a: &InclusiveRange<T>,
-                                  b: &InclusiveRange<T>)
-                                  -> Option<InclusiveRange<T>> {
-    let min = cmp::max(a.min, b.min);
-    let max = cmp::min(a.max, b.max);
+pub fn range_clamp<T: Copy + PartialOrd>(a: &InclusiveRange<T>,
+                                         b: &InclusiveRange<T>)
+                                         -> Option<InclusiveRange<T>> {
+    let min = if a.min > b.min { a.min } else { b.min };
+    let max = if a.max < b.max { a.max } else { b.max };
 
-    if min < max {
+    if min <= max {
         Some(InclusiveRange::new(min, max))
     }
     else {
@@ -66,4 +66,8 @@ fn test_range_clamp() {
     assert!(range_clamp(&InclusiveRange::new(1, 3),
                         &InclusiveRange::new(0, 2)) ==
             Some(InclusiveRange::new(1, 2)));
+
+    assert!(range_clamp(&InclusiveRange::new(1.0, 3.0),
+                        &InclusiveRange::new(0.0, 2.0)) ==
+            Some(InclusiveRange::new(1.0, 2.0)));
 }
