@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use std::ops::Sub;
+
 /// Inclusive range from min to max
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct InclusiveRange<T: Copy + PartialOrd> {
+pub struct InclusiveRange<T: Copy + PartialOrd + Sub> {
     pub min: T,
     pub max: T
 }
@@ -29,11 +31,16 @@ fn pomin<T: PartialOrd>(a: T, b: T) -> T {
     if a < b { a } else { b }
 }
 
-impl<T: Copy + PartialOrd> InclusiveRange<T> {
+impl<T: Copy + PartialOrd + Sub<Output=T>> InclusiveRange<T> {
     /// Create an InclusiveRange range from min to max
     pub fn new(min: T, max: T) -> InclusiveRange<T> {
         assert!(min <= max);
         InclusiveRange { min: min, max: max }
+    }
+
+    /// Distance between self.min and self.max
+    pub fn length(&self) -> T {
+        self.max - self.min
     }
 
     /// Expand `self` as needed to include another range.
@@ -45,9 +52,9 @@ impl<T: Copy + PartialOrd> InclusiveRange<T> {
 
 /// Create range covering the overlap between two ranges, or None if
 /// there is no overlap.
-pub fn range_clamp<T: Copy + PartialOrd>(a: &InclusiveRange<T>,
-                                         b: &InclusiveRange<T>)
-                                         -> Option<InclusiveRange<T>> {
+pub fn range_clamp<T: Copy + PartialOrd + Sub<Output=T>>
+    (a: &InclusiveRange<T>, b: &InclusiveRange<T>)
+     -> Option<InclusiveRange<T>> {
     let min = pomax(a.min, b.min);
     let max = pomin(a.max, b.max);
 
@@ -60,8 +67,9 @@ pub fn range_clamp<T: Copy + PartialOrd>(a: &InclusiveRange<T>,
 }
 
 /// Create range covering both ranges (and any gap between them).
-pub fn range_combine<T: Copy + PartialOrd>(a: &InclusiveRange<T>,
-                                           b: &InclusiveRange<T>) -> InclusiveRange<T> {
+pub fn range_combine<T: Copy + PartialOrd + Sub<Output=T>>(a: &InclusiveRange<T>,
+                                                           b: &InclusiveRange<T>)
+                                                           -> InclusiveRange<T> {
     InclusiveRange::new(pomin(a.min, b.min),
                         pomax(a.max, b.max))
 }
@@ -105,4 +113,10 @@ fn test_range_combine() {
     assert!(range_combine(&InclusiveRange::new(0, 2),
                           &InclusiveRange::new(-2, 1)) ==
             InclusiveRange::new(-2, 2));
+}
+
+#[test]
+fn test_range_length() {
+    assert!(InclusiveRange::new(-1, 2).length() == 3);
+    assert!(InclusiveRange::new(-1.0, 2.5).length() == 3.5);
 }
