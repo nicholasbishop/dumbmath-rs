@@ -46,6 +46,12 @@ impl Segment3f {
         distance / self.length()
     }
 
+    /// Convert a parametric delta to coordinate space. The sign of
+    /// the input is kept.
+    pub fn distance_from_parametric_delta(&self, delta: f32) -> f32 {
+        delta * self.length()
+    }
+
     /// Find the point on the segment closest to the input point. The
     /// return value contains both the parametric and actual location
     /// of the closest point.
