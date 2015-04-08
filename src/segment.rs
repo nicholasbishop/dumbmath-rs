@@ -95,14 +95,21 @@ fn test_segment_length() {
 }
 
 #[test]
-fn test_segment_distance_to_parametric_delta() {
+fn test_segment_distance_conversion() {
     use vector::vec3f;
     let s = Segment3f::new(&vec3f(0, 1, 0),
                            &vec3f(0, 7, 0));
-    assert!(s.distance_to_parametric_delta(0.0) == 0.0);
-    assert!(s.distance_to_parametric_delta(6.0) == 1.0);
-    assert!(s.distance_to_parametric_delta(12.0) == 2.0);
-    assert!(s.distance_to_parametric_delta(-3.0) == -0.5);
+    
+    let inputs = [
+        (0.0f32, 0.0f32),
+        (6.0, 1.0),
+        (12.0, 2.0),
+        (-3.0, -0.5)];
+
+    for &(distance, delta) in inputs.iter() {
+        assert!(s.distance_to_parametric_delta(distance) == delta);
+        assert!(s.distance_from_parametric_delta(delta) == distance);
+    }
 }
 
 #[test]
