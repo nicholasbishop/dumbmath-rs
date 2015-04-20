@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector::{distance3, dot3, Vec3f};
+use vector::{distance3, dot3, lerp3, Vec3f};
 
 /// Line segment between two points
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -50,6 +50,14 @@ impl Segment3f {
     /// the input is kept.
     pub fn distance_from_parametric_delta(&self, delta: f32) -> f32 {
         delta * self.length()
+    }
+
+    /// Linearly interpolate between the segment's endpoints by the
+    /// factor `t`. When `t` is zero the result is `self.start`, and
+    /// when `t` is one the result is `self.end`. The range of `t` is
+    /// not clamped.
+    pub fn point_from_parametric(&self, t: f32) -> Vec3f {
+        lerp3(&self.start, &self.end, t)
     }
 
     /// Find the point on the segment closest to the input point. The
@@ -110,6 +118,16 @@ fn test_segment_distance_conversion() {
         assert!(s.distance_to_parametric_delta(distance) == delta);
         assert!(s.distance_from_parametric_delta(delta) == distance);
     }
+}
+
+#[test]
+fn test_point_from_parametric() {
+    use vector::vec3f;
+    let s = Segment3f::new(&vec3f(0, 0, -1),
+                           &vec3f(0, 0, 3));
+    assert_eq!(s.point_from_parametric(0.0), vec3f(0, 0, -1));
+    assert_eq!(s.point_from_parametric(1.0), vec3f(0, 0, 3));
+    assert_eq!(s.point_from_parametric(0.5), vec3f(0, 0, 1));
 }
 
 #[test]
