@@ -49,6 +49,18 @@ impl Vec3f {
     pub fn magnitude(&self) -> f32 {
         self.magnitude_squared().sqrt()
     }
+
+    /// Create a normalized copy, or None if the magnitude is zero
+    pub fn normalized(&self) -> Option<Vec3f> {
+        let m = self.magnitude();
+        if m == 0.0 {
+            None
+        }
+        else {
+            let f = 1.0 / m;
+            Some((*self) * f)
+        }
+    }
 }
 
 /// Vec3f(0.0, 0.0, 0.0)
@@ -156,6 +168,12 @@ fn test_vec3f_magnitude() {
 #[test]
 fn test_vec3f_distance() {
     assert!(distance3(vec3f(0, -4, 0), vec3f(0, 4, 0)) == 8.0);
+}
+
+#[test]
+fn test_vec3f_normalized() {
+    assert_eq!(vec3f(0, 0, 0).normalized(), None);
+    assert_eq!(vec3f(0.5, 0, 0).normalized(), Some(vec3f(1, 0, 0)));
 }
 
 #[test]
