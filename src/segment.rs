@@ -34,6 +34,11 @@ impl Segment3f {
         }
     }
 
+    /// Get vector from start to end (not normalized)
+    pub fn to_vec3f(&self) -> Vec3f {
+        self.end - self.start
+    }
+
     /// Length of the line segment
     pub fn length(&self) -> f32 {
         distance3(self.start, self.end)
@@ -92,6 +97,15 @@ impl Segment3f {
             }
         }
     }
+}
+
+#[test]
+fn test_to_vec3f() {
+    use vector::vec3f;
+    assert_eq!(Segment3f::new(&vec3f(0, 0, 0),
+                              &vec3f(2, 3, 4)).to_vec3f(),
+               vec3f(2, 3, 4));
+               
 }
 
 #[test]
