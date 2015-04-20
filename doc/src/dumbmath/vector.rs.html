@@ -229,6 +229,24 @@
 <span id="187">187</span>
 <span id="188">188</span>
 <span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -280,6 +298,18 @@
     <span class='doccomment'>/// Length of the vector</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>magnitude</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='self'>self</span>.<span class='ident'>magnitude_squared</span>().<span class='ident'>sqrt</span>()
+    }
+
+    <span class='doccomment'>/// Create a normalized copy, or None if the magnitude is zero</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>normalized</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Vec3f</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>magnitude</span>();
+        <span class='kw'>if</span> <span class='ident'>m</span> <span class='op'>==</span> <span class='number'>0.0</span> {
+            <span class='prelude-val'>None</span>
+        }
+        <span class='kw'>else</span> {
+            <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='number'>1.0</span> <span class='op'>/</span> <span class='ident'>m</span>;
+            <span class='prelude-val'>Some</span>((<span class='op'>*</span><span class='self'>self</span>) <span class='op'>*</span> <span class='ident'>f</span>)
+        }
     }
 }
 
@@ -388,6 +418,12 @@
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_vec3f_distance</span>() {
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>distance3</span>(<span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='op'>-</span><span class='number'>4</span>, <span class='number'>0</span>), <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>4</span>, <span class='number'>0</span>)) <span class='op'>==</span> <span class='number'>8.0</span>);
+}
+
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>test_vec3f_normalized</span>() {
+    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>).<span class='ident'>normalized</span>(), <span class='prelude-val'>None</span>);
+    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>vec3f</span>(<span class='number'>0.5</span>, <span class='number'>0</span>, <span class='number'>0</span>).<span class='ident'>normalized</span>(), <span class='prelude-val'>Some</span>(<span class='ident'>vec3f</span>(<span class='number'>1</span>, <span class='number'>0</span>, <span class='number'>0</span>)));
 }
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
