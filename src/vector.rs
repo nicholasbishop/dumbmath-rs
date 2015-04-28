@@ -71,12 +71,18 @@ pub trait CastF32 { fn as_f32(&self) -> f32; }
 
 impl CastF32 for f32 { fn as_f32(&self) -> f32 { *self } }
 impl CastF32 for f64 { fn as_f32(&self) -> f32 { *self as f32 } }
+
 impl CastF32 for i8  { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for i16 { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for i32 { fn as_f32(&self) -> f32 { *self as f32 } }
+impl CastF32 for i64 { fn as_f32(&self) -> f32 { *self as f32 } }
+impl CastF32 for isize { fn as_f32(&self) -> f32 { *self as f32 } }
+
 impl CastF32 for u8  { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for u16 { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for u32 { fn as_f32(&self) -> f32 { *self as f32 } }
+impl CastF32 for u64 { fn as_f32(&self) -> f32 { *self as f32 } }
+impl CastF32 for usize { fn as_f32(&self) -> f32 { *self as f32 } }
 
 /// Create a Vec3f from x, y, and z inputs
 ///
