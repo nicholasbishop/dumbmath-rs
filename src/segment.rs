@@ -17,6 +17,7 @@
 // limitations under the License.
 
 use vector::{distance3, dot3, lerp3, Vec3f};
+use range::InclusiveRange;
 
 /// Line segment between two points
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -63,6 +64,15 @@ impl Segment3f {
     /// not clamped.
     pub fn point_from_parametric(&self, t: f32) -> Vec3f {
         lerp3(&self.start, &self.end, t)
+    }
+
+    /// Treat the range's start and end as parametric coords. Use
+    /// `point_from_parametric` to interpolate the range into a new
+    /// segment.
+    pub fn segment_from_parametric_range(&self,
+                                         r: InclusiveRange<f32>) -> Segment3f {
+        Segment3f::new(&self.point_from_parametric(r.min),
+                       &self.point_from_parametric(r.max))
     }
 
     /// Find the point on the segment closest to the input point. The
@@ -142,6 +152,20 @@ fn test_point_from_parametric() {
     assert_eq!(s.point_from_parametric(0.0), vec3f(0, 0, -1));
     assert_eq!(s.point_from_parametric(1.0), vec3f(0, 0, 3));
     assert_eq!(s.point_from_parametric(0.5), vec3f(0, 0, 1));
+}
+
+#[test]
+fn test_segment_from_parametric_range() {
+    use vector::vec3f;
+    type Rangef = InclusiveRange<f32>;
+    fn make_seg(a: u32, b: u32) -> Segment3f {
+        Segment3f::new(&vec3f(a, 0, 0), &vec3f(b, 0, 0))
+    }
+    let s = make_seg(0, 4);
+    assert_eq!(s.segment_from_parametric_range(Rangef::new(0.0, 1.0)),
+               make_seg(0, 4));
+    assert_eq!(s.segment_from_parametric_range(Rangef::new(0.25, 0.75)),
+               make_seg(1, 3));
 }
 
 #[test]
