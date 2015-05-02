@@ -70,7 +70,7 @@ impl Segment3f {
 
     /// Treat the range's start and end as parametric coords. Use
     /// `point_from_parametric` to interpolate the range into a new
-    /// segment.
+    /// segment. The output segment is not clamped.
     pub fn segment_from_parametric_range(&self, r: Rangef) -> Segment3f {
         Segment3f::new(&self.point_from_parametric(r.min),
                        &self.point_from_parametric(r.max))
