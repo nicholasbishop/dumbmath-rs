@@ -49,6 +49,11 @@ impl<T: Copy + PartialOrd + Sub<Output=T>> InclusiveRange<T> {
         }
     }
 
+    /// True if `min == max`, false otherwise.
+    pub fn empty(&self) -> bool {
+        self.min == self.max
+    }
+
     /// Distance between self.min and self.max
     pub fn length(&self) -> T {
         self.max - self.min
@@ -93,6 +98,13 @@ fn test_from_sorting() {
                InclusiveRange::new(1, 1));
     assert_eq!(InclusiveRange::from_sorting(1, 0),
                InclusiveRange::new(0, 1));
+}
+
+#[test]
+fn test_empty() {
+    assert_eq!(InclusiveRange::new(0, 1).empty(), false);
+    assert_eq!(InclusiveRange::new(0, 0).empty(), true);
+    assert_eq!(InclusiveRange::new(0.5, 0.5).empty(), true);
 }
 
 #[test]
