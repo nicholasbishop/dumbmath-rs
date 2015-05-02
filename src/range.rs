@@ -32,10 +32,21 @@ fn pomin<T: PartialOrd>(a: T, b: T) -> T {
 }
 
 impl<T: Copy + PartialOrd + Sub<Output=T>> InclusiveRange<T> {
-    /// Create an InclusiveRange range from min to max
+    /// Create an InclusiveRange from min to max. Asserts that min is
+    /// less than max.
     pub fn new(min: T, max: T) -> InclusiveRange<T> {
         assert!(min <= max);
         InclusiveRange { min: min, max: max }
+    }
+
+    /// Create an InclusiveRange by sorting the inputs.
+    pub fn from_sorting(a: T, b: T) -> InclusiveRange<T> {
+        if a <= b {
+            InclusiveRange { min: a, max: b }
+        }
+        else {
+            InclusiveRange { min: b, max: a }
+        }
     }
 
     /// Distance between self.min and self.max
@@ -72,6 +83,16 @@ pub fn range_combine<T: Copy + PartialOrd + Sub<Output=T>>(a: &InclusiveRange<T>
                                                            -> InclusiveRange<T> {
     InclusiveRange::new(pomin(a.min, b.min),
                         pomax(a.max, b.max))
+}
+
+#[test]
+fn test_from_sorting() {
+    assert_eq!(InclusiveRange::from_sorting(0, 1),
+               InclusiveRange::new(0, 1));
+    assert_eq!(InclusiveRange::from_sorting(1, 1),
+               InclusiveRange::new(1, 1));
+    assert_eq!(InclusiveRange::from_sorting(1, 0),
+               InclusiveRange::new(0, 1));
 }
 
 #[test]
