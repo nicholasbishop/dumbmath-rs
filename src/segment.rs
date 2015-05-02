@@ -19,6 +19,8 @@
 use vector::{distance3, dot3, lerp3, Vec3f};
 use range::InclusiveRange;
 
+pub type Rangef = InclusiveRange<f32>;
+
 /// Line segment between two points
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Segment3f {
@@ -69,8 +71,7 @@ impl Segment3f {
     /// Treat the range's start and end as parametric coords. Use
     /// `point_from_parametric` to interpolate the range into a new
     /// segment.
-    pub fn segment_from_parametric_range(&self,
-                                         r: InclusiveRange<f32>) -> Segment3f {
+    pub fn segment_from_parametric_range(&self, r: Rangef) -> Segment3f {
         Segment3f::new(&self.point_from_parametric(r.min),
                        &self.point_from_parametric(r.max))
     }
@@ -157,7 +158,6 @@ fn test_point_from_parametric() {
 #[test]
 fn test_segment_from_parametric_range() {
     use vector::vec3f;
-    type Rangef = InclusiveRange<f32>;
     fn make_seg(a: u32, b: u32) -> Segment3f {
         Segment3f::new(&vec3f(a, 0, 0), &vec3f(b, 0, 0))
     }
