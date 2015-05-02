@@ -183,6 +183,18 @@
 <span id="141">141</span>
 <span id="142">142</span>
 <span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -235,6 +247,11 @@
         }
     }
 
+    <span class='doccomment'>/// True if `min == max`, false otherwise.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='self'>self</span>.<span class='ident'>min</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>max</span>
+    }
+
     <span class='doccomment'>/// Distance between self.min and self.max</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>max</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>min</span>
@@ -279,6 +296,13 @@
                <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>));
     <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>from_sorting</span>(<span class='number'>1</span>, <span class='number'>0</span>),
                <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>));
+}
+
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>test_empty</span>() {
+    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>).<span class='ident'>empty</span>(), <span class='boolval'>false</span>);
+    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>).<span class='ident'>empty</span>(), <span class='boolval'>true</span>);
+    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0.5</span>, <span class='number'>0.5</span>).<span class='ident'>empty</span>(), <span class='boolval'>true</span>);
 }
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
