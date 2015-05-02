@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>segment</a>::<wbr><a class='struct' href=''>Segment3f</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="#" title="collapse all docs">[-]</a>
-        </span><a id='src-926' class='srclink' href='../../src/dumbmath/segment.rs.html#24-27' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-930' class='srclink' href='../../src/dumbmath/segment.rs.html#26-29' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Segment3f {
     pub start: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>,
     pub end: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>,
@@ -69,10 +69,13 @@ the input is kept.</p>
 factor <code>t</code>. When <code>t</code> is zero the result is <code>self.start</code>, and
 when <code>t</code> is one the result is <code>self.end</code>. The range of <code>t</code> is
 not clamped.</p>
-</div><h4 id='method.segment_from_parametric_range' class='method'><code>fn <a href='#method.segment_from_parametric_range' class='fnname'>segment_from_parametric_range</a>(&amp;self, r: <a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;) -&gt; <a class='struct' href='../../dumbmath/segment/struct.Segment3f.html' title='dumbmath::segment::Segment3f'>Segment3f</a></code></h4>
+</div><h4 id='method.segment_from_parametric_range' class='method'><code>fn <a href='#method.segment_from_parametric_range' class='fnname'>segment_from_parametric_range</a>(&amp;self, r: <a class='type' href='../../dumbmath/segment/type.Rangef.html' title='dumbmath::segment::Rangef'>Rangef</a>) -&gt; <a class='struct' href='../../dumbmath/segment/struct.Segment3f.html' title='dumbmath::segment::Segment3f'>Segment3f</a></code></h4>
 <div class='docblock'><p>Treat the range&#39;s start and end as parametric coords. Use
 <code>point_from_parametric</code> to interpolate the range into a new
-segment.</p>
+segment. The output segment is not clamped.</p>
+</div><h4 id='method.project_segment_as_range' class='method'><code>fn <a href='#method.project_segment_as_range' class='fnname'>project_segment_as_range</a>(&amp;self, other: &amp;<a class='struct' href='../../dumbmath/segment/struct.Segment3f.html' title='dumbmath::segment::Segment3f'>Segment3f</a>) -&gt; <a class='type' href='../../dumbmath/segment/type.Rangef.html' title='dumbmath::segment::Rangef'>Rangef</a></code></h4>
+<div class='docblock'><p>Project another segment onto <code>self</code>. The result is a
+parametric range of <code>self</code> clamped to [0, 1].</p>
 </div><h4 id='method.closest_point_to_point' class='method'><code>fn <a href='#method.closest_point_to_point' class='fnname'>closest_point_to_point</a>(&amp;self, point: &amp;<a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>)</a></code></h4>
 <div class='docblock'><p>Find the point on the segment closest to the input point. The
 return value contains both the parametric and actual location
