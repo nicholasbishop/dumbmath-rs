@@ -198,6 +198,30 @@
 <span id="156">156</span>
 <span id="157">157</span>
 <span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -218,6 +242,7 @@
 <span class='comment'>// limitations under the License.</span>
 
 <span class='kw'>use</span> <span class='ident'>vector</span>::{<span class='ident'>distance3</span>, <span class='ident'>dot3</span>, <span class='ident'>lerp3</span>, <span class='ident'>Vec3f</span>};
+<span class='kw'>use</span> <span class='ident'>range</span>::<span class='ident'>InclusiveRange</span>;
 
 <span class='doccomment'>/// Line segment between two points</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
@@ -264,6 +289,15 @@
     <span class='doccomment'>/// not clamped.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_from_parametric</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
         <span class='ident'>lerp3</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>start</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>end</span>, <span class='ident'>t</span>)
+    }
+
+    <span class='doccomment'>/// Treat the range&#39;s start and end as parametric coords. Use</span>
+    <span class='doccomment'>/// `point_from_parametric` to interpolate the range into a new</span>
+    <span class='doccomment'>/// segment.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>segment_from_parametric_range</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>,
+                                         <span class='ident'>r</span>: <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>f32</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
+        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>point_from_parametric</span>(<span class='ident'>r</span>.<span class='ident'>min</span>),
+                       <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>point_from_parametric</span>(<span class='ident'>r</span>.<span class='ident'>max</span>))
     }
 
     <span class='doccomment'>/// Find the point on the segment closest to the input point. The</span>
@@ -343,6 +377,20 @@
     <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>point_from_parametric</span>(<span class='number'>0.0</span>), <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='op'>-</span><span class='number'>1</span>));
     <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>point_from_parametric</span>(<span class='number'>1.0</span>), <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>3</span>));
     <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>point_from_parametric</span>(<span class='number'>0.5</span>), <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>1</span>));
+}
+
+<span class='attribute'>#[<span class='ident'>test</span>]</span>
+<span class='kw'>fn</span> <span class='ident'>test_segment_from_parametric_range</span>() {
+    <span class='kw'>use</span> <span class='ident'>vector</span>::<span class='ident'>vec3f</span>;
+    <span class='kw'>type</span> <span class='ident'>Rangef</span> <span class='op'>=</span> <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>f32</span><span class='op'>&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>make_seg</span>(<span class='ident'>a</span>: <span class='ident'>u32</span>, <span class='ident'>b</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
+        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='ident'>a</span>, <span class='number'>0</span>, <span class='number'>0</span>), <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='ident'>b</span>, <span class='number'>0</span>, <span class='number'>0</span>))
+    }
+    <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>make_seg</span>(<span class='number'>0</span>, <span class='number'>4</span>);
+    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>segment_from_parametric_range</span>(<span class='ident'>Rangef</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>)),
+               <span class='ident'>make_seg</span>(<span class='number'>0</span>, <span class='number'>4</span>));
+    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>segment_from_parametric_range</span>(<span class='ident'>Rangef</span>::<span class='ident'>new</span>(<span class='number'>0.25</span>, <span class='number'>0.75</span>)),
+               <span class='ident'>make_seg</span>(<span class='number'>1</span>, <span class='number'>3</span>));
 }
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
