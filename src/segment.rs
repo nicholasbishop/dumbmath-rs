@@ -199,5 +199,7 @@ mod test {
                    Rangef::new(0.0, 0.0));
         assert_eq!(s.project_segment_as_range(&make_seg(1, 3)),
                    Rangef::new(0.25, 0.75));
+        assert_eq!(s.project_segment_as_range(&make_seg(3, 1)),
+                   Rangef::new(0.25, 0.75));
     }
 }
