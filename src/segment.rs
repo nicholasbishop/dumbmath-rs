@@ -110,73 +110,78 @@ impl Segment3f {
     }
 }
 
-#[test]
-fn test_to_vec3f() {
-    use vector::vec3f;
-    assert_eq!(Segment3f::new(&vec3f(0, 0, 0),
-                              &vec3f(2, 3, 4)).to_vec3f(),
-               vec3f(2, 3, 4));
-               
-}
+#[cfg(test)]
+mod test {
+    use super::*;
 
-#[test]
-fn test_segment_length() {
-    use vector::vec3f;
-    let s = Segment3f::new(&vec3f(0, 0, 0),
-                           &vec3f(0, 0, 9));
-    assert_eq!(s.length(), 9.0);
-}
-
-#[test]
-fn test_segment_distance_conversion() {
-    use vector::vec3f;
-    let s = Segment3f::new(&vec3f(0, 1, 0),
-                           &vec3f(0, 7, 0));
-    
-    let inputs = [
-        (0.0f32, 0.0f32),
-        (6.0, 1.0),
-        (12.0, 2.0),
-        (-3.0, -0.5)];
-
-    for &(distance, delta) in inputs.iter() {
-        assert_eq!(s.distance_to_parametric_delta(distance), delta);
-        assert_eq!(s.distance_from_parametric_delta(delta), distance);
+    #[test]
+    fn test_to_vec3f() {
+        use vector::vec3f;
+        assert_eq!(Segment3f::new(&vec3f(0, 0, 0),
+                                  &vec3f(2, 3, 4)).to_vec3f(),
+                   vec3f(2, 3, 4));
+        
     }
-}
 
-#[test]
-fn test_point_from_parametric() {
-    use vector::vec3f;
-    let s = Segment3f::new(&vec3f(0, 0, -1),
-                           &vec3f(0, 0, 3));
-    assert_eq!(s.point_from_parametric(0.0), vec3f(0, 0, -1));
-    assert_eq!(s.point_from_parametric(1.0), vec3f(0, 0, 3));
-    assert_eq!(s.point_from_parametric(0.5), vec3f(0, 0, 1));
-}
-
-#[test]
-fn test_segment_from_parametric_range() {
-    use vector::vec3f;
-    fn make_seg(a: u32, b: u32) -> Segment3f {
-        Segment3f::new(&vec3f(a, 0, 0), &vec3f(b, 0, 0))
+    #[test]
+    fn test_segment_length() {
+        use vector::vec3f;
+        let s = Segment3f::new(&vec3f(0, 0, 0),
+                               &vec3f(0, 0, 9));
+        assert_eq!(s.length(), 9.0);
     }
-    let s = make_seg(0, 4);
-    assert_eq!(s.segment_from_parametric_range(Rangef::new(0.0, 1.0)),
-               make_seg(0, 4));
-    assert_eq!(s.segment_from_parametric_range(Rangef::new(0.25, 0.75)),
-               make_seg(1, 3));
-}
 
-#[test]
-fn test_segment_closest_point_to_point() {
-    use vector::vec3f;
-    let s = Segment3f::new(&vec3f(2, 0, 0),
-                           &vec3f(3, 0, 0));
-    assert_eq!(s.closest_point_to_point(&vec3f(1, 0, 0)),
-               (0.0, vec3f(2, 0, 0)));
-    assert_eq!(s.closest_point_to_point(&vec3f(4, 0, 0)),
-               (1.0, vec3f(3, 0, 0)));
-    assert_eq!(s.closest_point_to_point(&vec3f(2.5, 1, 0)),
-               (0.5, vec3f(2.5, 0, 0)));
+    #[test]
+    fn test_segment_distance_conversion() {
+        use vector::vec3f;
+        let s = Segment3f::new(&vec3f(0, 1, 0),
+                               &vec3f(0, 7, 0));
+        
+        let inputs = [
+            (0.0f32, 0.0f32),
+            (6.0, 1.0),
+            (12.0, 2.0),
+            (-3.0, -0.5)];
+
+        for &(distance, delta) in inputs.iter() {
+            assert_eq!(s.distance_to_parametric_delta(distance), delta);
+            assert_eq!(s.distance_from_parametric_delta(delta), distance);
+        }
+    }
+
+    #[test]
+    fn test_point_from_parametric() {
+        use vector::vec3f;
+        let s = Segment3f::new(&vec3f(0, 0, -1),
+                               &vec3f(0, 0, 3));
+        assert_eq!(s.point_from_parametric(0.0), vec3f(0, 0, -1));
+        assert_eq!(s.point_from_parametric(1.0), vec3f(0, 0, 3));
+        assert_eq!(s.point_from_parametric(0.5), vec3f(0, 0, 1));
+    }
+
+    #[test]
+    fn test_segment_from_parametric_range() {
+        use vector::vec3f;
+        fn make_seg(a: u32, b: u32) -> Segment3f {
+            Segment3f::new(&vec3f(a, 0, 0), &vec3f(b, 0, 0))
+        }
+        let s = make_seg(0, 4);
+        assert_eq!(s.segment_from_parametric_range(Rangef::new(0.0, 1.0)),
+                   make_seg(0, 4));
+        assert_eq!(s.segment_from_parametric_range(Rangef::new(0.25, 0.75)),
+                   make_seg(1, 3));
+    }
+
+    #[test]
+    fn test_segment_closest_point_to_point() {
+        use vector::vec3f;
+        let s = Segment3f::new(&vec3f(2, 0, 0),
+                               &vec3f(3, 0, 0));
+        assert_eq!(s.closest_point_to_point(&vec3f(1, 0, 0)),
+                   (0.0, vec3f(2, 0, 0)));
+        assert_eq!(s.closest_point_to_point(&vec3f(4, 0, 0)),
+                   (1.0, vec3f(3, 0, 0)));
+        assert_eq!(s.closest_point_to_point(&vec3f(2.5, 1, 0)),
+                   (0.5, vec3f(2.5, 0, 0)));
+    }
 }
