@@ -76,6 +76,13 @@ impl Segment3f {
                        &self.point_from_parametric(r.max))
     }
 
+    /// Project another segment onto `self`. The result is a
+    /// parametric range of `self` clamped to [0, 1].
+    pub fn project_segment_as_range(&self, other: &Segment3f) -> Rangef {
+        Rangef::from_sorting(self.closest_point_to_point(&other.start).0,
+                             self.closest_point_to_point(&other.end).0)
+    }
+
     /// Find the point on the segment closest to the input point. The
     /// return value contains both the parametric and actual location
     /// of the closest point.
@@ -114,6 +121,10 @@ impl Segment3f {
 mod test {
     use super::*;
     use vector::vec3f;
+
+    fn make_seg(a: i32, b: i32) -> Segment3f {
+        Segment3f::new(&vec3f(a, 0, 0), &vec3f(b, 0, 0))
+    }
 
     #[test]
     fn test_to_vec3f() {
@@ -158,9 +169,6 @@ mod test {
 
     #[test]
     fn test_segment_from_parametric_range() {
-        fn make_seg(a: u32, b: u32) -> Segment3f {
-            Segment3f::new(&vec3f(a, 0, 0), &vec3f(b, 0, 0))
-        }
         let s = make_seg(0, 4);
         assert_eq!(s.segment_from_parametric_range(Rangef::new(0.0, 1.0)),
                    make_seg(0, 4));
@@ -178,5 +186,18 @@ mod test {
                    (1.0, vec3f(3, 0, 0)));
         assert_eq!(s.closest_point_to_point(&vec3f(2.5, 1, 0)),
                    (0.5, vec3f(2.5, 0, 0)));
+    }
+
+    #[test]
+    fn test_project_segment_as_range() {
+        let s = make_seg(0, 4);
+        assert_eq!(s.project_segment_as_range(&make_seg(0, 4)),
+                   Rangef::new(0.0, 1.0));
+        assert_eq!(s.project_segment_as_range(&make_seg(-1, 5)),
+                   Rangef::new(0.0, 1.0));
+        assert_eq!(s.project_segment_as_range(&make_seg(-1, -1)),
+                   Rangef::new(0.0, 0.0));
+        assert_eq!(s.project_segment_as_range(&make_seg(1, 3)),
+                   Rangef::new(0.25, 0.75));
     }
 }
