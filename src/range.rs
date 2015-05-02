@@ -21,7 +21,7 @@ pub struct InclusiveRange<T: Copy + PartialOrd + Sub> {
     pub max: T
 }
 
-pub const RANGE_0_1_F32: InclusiveRange<f32> = InclusiveRange { min: 0.0, max: 0.0 };
+pub const RANGE_0_1_F32: InclusiveRange<f32> = InclusiveRange { min: 0.0, max: 1.0 };
 
 fn pomax<T: PartialOrd>(a: T, b: T) -> T {
     if a > b { a } else { b }
