@@ -14,6 +14,9 @@
 
 use std::ops::Sub;
 
+/// Convenience type: InclusiveRange<f32>
+pub type Rangef = InclusiveRange<f32>;
+
 /// Inclusive range from min to max
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct InclusiveRange<T: Copy + PartialOrd + Sub> {

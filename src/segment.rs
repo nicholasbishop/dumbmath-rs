@@ -17,9 +17,7 @@
 // limitations under the License.
 
 use vector::{distance3, dot3, lerp3, Vec3f};
-use range::InclusiveRange;
-
-pub type Rangef = InclusiveRange<f32>;
+use range::Rangef;
 
 /// Line segment between two points
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -120,6 +118,7 @@ impl Segment3f {
 #[cfg(test)]
 mod test {
     use super::*;
+    use range::Rangef;
     use vector::vec3f;
 
     fn make_seg(a: i32, b: i32) -> Segment3f {
