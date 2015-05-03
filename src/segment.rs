@@ -18,6 +18,7 @@
 
 use vector::{distance3, dot3, lerp3, Vec3f};
 use range::Rangef;
+use std::ops::Add;
 
 /// Line segment between two points
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -112,6 +113,13 @@ impl Segment3f {
                 (t / denom, a + ab * t)
             }
         }
+    }
+}
+
+impl Add<Vec3f> for Segment3f {
+    type Output = Segment3f;
+    fn add(self, v: Vec3f) -> Self::Output {
+        Segment3f::new(&(self.start + v), &(self.end + v))
     }
 }
 
