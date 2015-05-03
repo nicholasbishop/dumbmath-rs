@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Line3f","Line of infinite length represented by two distinct points it passes through."]]});

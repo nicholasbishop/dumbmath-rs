@@ -195,6 +195,9 @@
 <span id="153">153</span>
 <span id="154">154</span>
 <span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -211,6 +214,9 @@
 <span class='comment'>// limitations under the License.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Sub</span>;
+
+<span class='doccomment'>/// Convenience type: InclusiveRange&lt;f32&gt;</span>
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Rangef</span> <span class='op'>=</span> <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>f32</span><span class='op'>&gt;</span>;
 
 <span class='doccomment'>/// Inclusive range from min to max</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
