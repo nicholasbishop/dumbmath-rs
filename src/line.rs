@@ -1,5 +1,9 @@
 // Copyright 2015 Nicholas Bishop
 //
+// Closest-points-between-lines method adapted from "Real-Time
+// Collision Detection" by Christer Ericson, published by Morgan
+// Kaufmann Publishers, Copyright 2005 Elsevier Inc
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -12,13 +16,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector::Vec3f;
+use vector::{Vec3f, dot3};
 
 /// Line of infinite length represented by two distinct points it
 /// passes through.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Line3f {
-    points: (Vec3f, Vec3f)
+    pub points: (Vec3f, Vec3f)
 }
 
 impl Line3f {
@@ -34,6 +38,37 @@ impl Line3f {
             })
         }
     }
+
+    /// Find the closest points between two lines. The result is a
+    /// pair of parametric points, the first for `self` and the second
+    /// for `line`. If the lines are parallel then None is
+    /// returned.
+    ///
+    /// Adapted from "Real-Time Collision Detection" by Christer
+    /// Ericson, published by Morgan Kaufmann Publishers, Copyright
+    /// 2005 Elsevier Inc
+    pub fn closest_points_between_lines(&self,
+                                        line: Line3f) -> Option<(f32, f32)> {
+        let d1 = self.points.1 - self.points.0;
+        let d2 = line.points.1 - line.points.0;
+        let r = self.points.0 - line.points.0;
+
+        let a = dot3(d1, d1);
+        let b = dot3(d1, d2);
+        let c = dot3(d1, r);
+        let e = dot3(d2, d2);
+        let f = dot3(d2, r);
+
+        let d = a * e - b * b;
+        if d == 0.0 {
+            None
+        }
+        else {
+            let s = (b * f - c * e) / d;
+            let t = (a * f - b * c) / d;
+            Some((s, t))
+        }
+    }
 }
 
 #[cfg(test)]
@@ -47,5 +82,36 @@ mod test {
         let b = vec3f(1, 0, 0);
         assert_eq!(Line3f::new(a, a), None);
         assert_eq!(Line3f::new(a, b).unwrap(), Line3f { points: (a, b) } );
+    }
+
+    #[test]
+    fn test_closest_points_between_lines() {
+        let a = vec3f(0, 0, 0);
+        let b = vec3f(4, 0, 0);
+
+        let c = vec3f(2, 0, 0);
+        let d = vec3f(2, 2, 0);
+
+        let l1 = Line3f::new(a, b).unwrap();
+        let l2 = Line3f::new(c, d).unwrap();
+
+        // Intersection
+        assert_eq!(l1.closest_points_between_lines(l2).unwrap(), (0.5, 0.0));
+
+        // Coincident
+        assert_eq!(l1.closest_points_between_lines(l1), None);
+
+        // Parallel, not coincident
+        let e = vec3f(0, 0, 1);
+        let f = vec3f(4, 0, 1);
+        let l3 = Line3f::new(e, f).unwrap();
+        assert_eq!(l1.closest_points_between_lines(l3), None);
+
+        // No intersection, not parallel
+        let g = vec3f(0, 4, 1);
+        let h = vec3f(0, 0, 1);
+        let l4 = Line3f::new(g, h).unwrap();
+        assert_eq!(l1.closest_points_between_lines(l4).unwrap(),
+                   (0.0, 1.0));
     }
 }
