@@ -130,6 +130,13 @@ impl Add for Vec3f {
     }
 }
 
+impl Add<f32> for Vec3f {
+    type Output = Vec3f;
+    fn add(self, s: f32) -> Vec3f {
+        Vec3f::new(self.x + s, self.y + s, self.z + s)
+    }
+}
+
 impl Div for Vec3f {
     type Output = Vec3f;
     fn div(self, v: Vec3f) -> Vec3f {
@@ -155,6 +162,13 @@ impl Sub for Vec3f {
     type Output = Vec3f;
     fn sub(self, v: Vec3f) -> Vec3f {
         Vec3f::new(self.x - v.x, self.y - v.y, self.z - v.z)
+    }
+}
+
+impl Sub<f32> for Vec3f {
+    type Output = Vec3f;
+    fn sub(self, s: f32) -> Vec3f {
+        Vec3f::new(self.x - s, self.y - s, self.z - s)
     }
 }
 
