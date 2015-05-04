@@ -110,7 +110,8 @@ impl Segment3f {
             } else {
                 // point projects inside the [a,b] interval; must do
                 // deferred divide now
-                (t / denom, a + ab * t)
+                let t = t / denom;
+                (t, a + ab * t)
             }
         }
     }
