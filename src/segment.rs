@@ -1,8 +1,8 @@
 // Copyright 2015 Nicholas Bishop
 //
-// Closest-point method adapted from "Real-Time Collision Detection"
-// by Christer Ericson, published by Morgan Kaufmann Publishers,
-// Copyright 2005 Elsevier Inc
+// Closest-point and point-distance methods adapted from "Real-Time
+// Collision Detection" by Christer Ericson, published by Morgan
+// Kaufmann Publishers, Copyright 2005 Elsevier Inc
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,6 +80,32 @@ impl Segment3f {
     pub fn project_segment_as_range(&self, other: &Segment3f) -> Rangef {
         Rangef::from_sorting(self.closest_point_to_point(&other.start).0,
                              self.closest_point_to_point(&other.end).0)
+    }
+
+    /// Return the squared distance to the input `point`.
+    ///
+    /// Adapted from "Real-Time Collision Detection" by Christer
+    /// Ericson, published by Morgan Kaufmann Publishers, Copyright
+    /// 2005 Elsevier Inc
+    pub fn point_distance_squared(&self, point: Vec3f) -> f32 {
+        let ab = self.end - self.start;
+        let ac = point - self.start;
+        let bc = point - self.end;
+        let e = dot3(ac, ab);
+        // Handle cases where c projects outside ab
+        if e <= 0.0 {
+            dot3(ac, ac)
+        }
+        else {
+            let f = dot3(ab, ab);
+            if e >= f {
+                dot3(bc, bc)
+            }
+            else {
+                // Handle cases where c projects onto ab
+                dot3(ac, ac) - e * e / f
+            }
+        }
     }
 
     /// Find the point on the segment closest to the input point. The
