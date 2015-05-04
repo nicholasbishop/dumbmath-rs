@@ -252,12 +252,45 @@
 <span id="210">210</span>
 <span id="211">211</span>
 <span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
-<span class='comment'>// Closest-point method adapted from &quot;Real-Time Collision Detection&quot;</span>
-<span class='comment'>// by Christer Ericson, published by Morgan Kaufmann Publishers,</span>
-<span class='comment'>// Copyright 2005 Elsevier Inc</span>
+<span class='comment'>// Closest-point and point-distance methods adapted from &quot;Real-Time</span>
+<span class='comment'>// Collision Detection&quot; by Christer Ericson, published by Morgan</span>
+<span class='comment'>// Kaufmann Publishers, Copyright 2005 Elsevier Inc</span>
 <span class='comment'>//</span>
 <span class='comment'>// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class='comment'>// you may not use this file except in compliance with the License.</span>
@@ -337,6 +370,38 @@
                              <span class='self'>self</span>.<span class='ident'>closest_point_to_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='ident'>end</span>).<span class='number'>0</span>)
     }
 
+    <span class='doccomment'>/// Return the squared distance from this segment to the input</span>
+    <span class='doccomment'>/// `point`.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Adapted from &quot;Real-Time Collision Detection&quot; by Christer</span>
+    <span class='doccomment'>/// Ericson, published by Morgan Kaufmann Publishers, Copyright</span>
+    <span class='doccomment'>/// 2005 Elsevier Inc</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_distance_squared</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='kw'>let</span> <span class='ident'>ab</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>end</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start</span>;
+        <span class='kw'>let</span> <span class='ident'>ac</span> <span class='op'>=</span> <span class='ident'>point</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start</span>;
+        <span class='kw'>let</span> <span class='ident'>bc</span> <span class='op'>=</span> <span class='ident'>point</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>end</span>;
+        <span class='kw'>let</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>ac</span>, <span class='ident'>ab</span>);
+        <span class='comment'>// Handle cases where c projects outside ab</span>
+        <span class='kw'>if</span> <span class='ident'>e</span> <span class='op'>&lt;=</span> <span class='number'>0.0</span> {
+            <span class='ident'>dot3</span>(<span class='ident'>ac</span>, <span class='ident'>ac</span>)
+        }
+        <span class='kw'>else</span> {
+            <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>ab</span>, <span class='ident'>ab</span>);
+            <span class='kw'>if</span> <span class='ident'>e</span> <span class='op'>&gt;=</span> <span class='ident'>f</span> {
+                <span class='ident'>dot3</span>(<span class='ident'>bc</span>, <span class='ident'>bc</span>)
+            }
+            <span class='kw'>else</span> {
+                <span class='comment'>// Handle cases where c projects onto ab</span>
+                <span class='ident'>dot3</span>(<span class='ident'>ac</span>, <span class='ident'>ac</span>) <span class='op'>-</span> <span class='ident'>e</span> <span class='op'>*</span> <span class='ident'>e</span> <span class='op'>/</span> <span class='ident'>f</span>
+            }
+        }
+    }
+
+    <span class='doccomment'>/// Return the distance from this segment to the input `point`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_distance</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='self'>self</span>.<span class='ident'>point_distance_squared</span>(<span class='ident'>point</span>).<span class='ident'>sqrt</span>()
+    }
+
     <span class='doccomment'>/// Find the point on the segment closest to the input point. The</span>
     <span class='doccomment'>/// return value contains both the parametric and actual location</span>
     <span class='doccomment'>/// of the closest point.</span>
@@ -365,7 +430,8 @@
             } <span class='kw'>else</span> {
                 <span class='comment'>// point projects inside the [a,b] interval; must do</span>
                 <span class='comment'>// deferred divide now</span>
-                (<span class='ident'>t</span> <span class='op'>/</span> <span class='ident'>denom</span>, <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>ab</span> <span class='op'>*</span> <span class='ident'>t</span>)
+                <span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> <span class='ident'>t</span> <span class='op'>/</span> <span class='ident'>denom</span>;
+                (<span class='ident'>t</span>, <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>ab</span> <span class='op'>*</span> <span class='ident'>t</span>)
             }
         }
     }
