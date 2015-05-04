@@ -82,7 +82,8 @@ impl Segment3f {
                              self.closest_point_to_point(&other.end).0)
     }
 
-    /// Return the squared distance to the input `point`.
+    /// Return the squared distance from this segment to the input
+    /// `point`.
     ///
     /// Adapted from "Real-Time Collision Detection" by Christer
     /// Ericson, published by Morgan Kaufmann Publishers, Copyright
@@ -106,6 +107,11 @@ impl Segment3f {
                 dot3(ac, ac) - e * e / f
             }
         }
+    }
+
+    /// Return the distance from this segment to the input `point`.
+    pub fn point_distance(&self, point: Vec3f) -> f32 {
+        self.point_distance_squared(point).sqrt()
     }
 
     /// Find the point on the segment closest to the input point. The
