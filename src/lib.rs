@@ -13,6 +13,7 @@
 // limitations under the License.
 
 pub mod aabb;
+pub mod angle;
 pub mod intersect;
 pub mod line;
 pub mod range;
