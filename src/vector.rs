@@ -61,6 +61,17 @@ impl Vec3f {
             Some((*self) * f)
         }
     }
+
+    /// Projection of `self` into `v`, or None if the magnitude of
+    /// `b` is zero.
+    pub fn project_onto(&self, v: Vec3f) -> Option<Vec3f> {
+        if v == ZERO_3F {
+            None
+        }
+        else {
+            Some(v * (dot3(*self, v) / dot3(v, v)))
+        }
+    }
 }
 
 /// Vec3f(0.0, 0.0, 0.0)
@@ -194,6 +205,15 @@ fn test_vec3f_distance() {
 fn test_vec3f_normalized() {
     assert_eq!(vec3f(0, 0, 0).normalized(), None);
     assert_eq!(vec3f(0.5, 0, 0).normalized(), Some(vec3f(1, 0, 0)));
+}
+
+#[test]
+fn test_vec3f_project_onto() {
+    let z = vec3f(0, 0, 0);
+    let a = vec3f(1, 0, 0);
+    let b = vec3f(1, 1, 0);
+    assert_eq!(a.project_onto(z), None);
+    assert_eq!(a.project_onto(b).unwrap(), vec3f(0.5, 0.5, 0));
 }
 
 #[test]
