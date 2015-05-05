@@ -46,6 +46,14 @@ impl Segment3f {
         distance3(self.start, self.end)
     }
 
+    /// Create a copy of `self` with endpoints reversed.
+    pub fn reversed(&self) -> Segment3f {
+        Segment3f {
+            start: self.end,
+            end: self.start
+        }
+    }
+
     /// Convert a distance in coordinate space to a distance in the
     /// line segment's parametric space. The sign of the input is
     /// kept.
@@ -179,6 +187,14 @@ mod test {
         let s = Segment3f::new(&vec3f(0, 0, 0),
                                &vec3f(0, 0, 9));
         assert_eq!(s.length(), 9.0);
+    }
+
+    #[test]
+    fn test_segment_reversed() {
+        let a = &vec3f(-1.5, 0, 0);
+        let b = &vec3f(1.0, 0, 0);
+        assert_eq!(Segment3f::new(a, b).reversed(),
+                   Segment3f::new(b, a));
     }
 
     #[test]
