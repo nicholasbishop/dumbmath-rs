@@ -67,6 +67,17 @@ pub struct Quad2f {
     pub points: (Vec2f, Vec2f, Vec2f, Vec2f)
 }
 
+/// Return type for Quad2f::iblerp
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum IBLerpResult {
+    NoSolution,
+    /// One solutions (as parametric coordinates)
+    OneSolution(Vec2f),
+    /// Two solutions (as parametric coordinates)
+    TwoSolutions(Vec2f, Vec2f),
+    ManySolutions
+}
+
 impl Quad2f {
     pub fn new(a: Vec2f, b: Vec2f, c: Vec2f, d: Vec2f) -> Quad2f {
         Quad2f {
@@ -74,12 +85,61 @@ impl Quad2f {
         }
     }
 
-    // Adapted from stackoverflow.com/questions/808441
-    pub fn iblerp(&self, point: Vec2f) {
-        let a = (self.points.0 - point).cross(self.points.0 - self.points.2);
-        let b = ( (self.points.0 - point).cross(self.points.1 - self.points.3) + (self.points.1 - point).cross(self.points.0 - self.points.2) ) / 2;
-        let c = (self.points.1 - point).cross(self.points.1 - self.points.3);
+    /// Inverse bilinear interpolation
+    ///
+    /// Adapted from stackoverflow.com/questions/808441
+    pub fn iblerp(&self, point: Vec2f) -> IBLerpResult {
+        let p0mp = self.points.0 - point;
+        let p1mp = self.points.1 - point;
+        let p0mp3 = self.points.0 - self.points.3;
+        let p1mp2 = self.points.1 - self.points.2;
+
+        let a = p0mp.cross(p0mp3);
+        let b0 = p0mp.cross(p1mp2);
+        let b1 = p1mp.cross(p0mp3);
+        let b = (b0 + b1) / 2.0;
+        let c = p1mp.cross(p1mp2);
+
+        let calc_st = |s| {
+            let den = (1.0 - s) * p0mp3.x + s * p1mp2.x;
+            // TODO(nicholasbishop)
+            assert!(den != 0.0);
+            Vec2f::new(s, ((1.0 - s) * (p0mp.x) + s * p1mp.x) / den)
+        };
+
+        let den = a - (2.0 * b) + c;
+        if den == 0.0 {
+            let m = a - c;
+            if m == 0.0 {
+                if a == 0.0 {
+                    IBLerpResult::ManySolutions
+                }
+                else {
+                    IBLerpResult::NoSolution
+                }
+            }
+            else {
+                IBLerpResult::OneSolution(calc_st(a / m))
+            }
+        }
+        else {
+            let left = a - b;
+            let right = (b.powi(2) - a*c).sqrt();
+            let s0 = (left + right) / den;
+            let s1 = (left - right) / den;
+            IBLerpResult::TwoSolutions(calc_st(s0), calc_st(s1))
+        }
     }
+}
+
+#[test]
+fn test_iblerp() {
+    let q = Quad2f::new(vec2f(0, 0),
+                        vec2f(4, 0),
+                        vec2f(4, 4),
+                        vec2f(0, 4));
+    println!("{:?}", q.iblerp(vec2f(2, 2)));
+    assert_eq!(false, true);
 }
 
 /// Vector with three f32 components
