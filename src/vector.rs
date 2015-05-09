@@ -135,9 +135,18 @@ impl Quad2f {
 
         let calc_st = |s| {
             let den = (1.0 - s) * p0mp3.x + s * p1mp2.x;
-            // TODO(nicholasbishop)
-            assert!(den != 0.0);
-            Vec2f::new(s, ((1.0 - s) * (p0mp.x) + s * p1mp.x) / den)
+            let t = if den == 0.0 {
+                // TODO(nicholasbishop): perhaps there's a more
+                // efficient way to solve this, the SO post doesn't
+                // seem to cover this case
+                let rb = self.points.0.lerp(self.points.1, s);
+                let rt = self.points.3.lerp(self.points.2, s);
+                Line2f::new(rb, rt).closest_parametric_point(point)
+            }
+            else {
+                ((1.0 - s) * (p0mp.x) + s * p1mp.x) / den
+            };
+            Vec2f::new(s, t)
         };
 
         let den = a - (2.0 * b) + c;
@@ -171,8 +180,8 @@ fn test_iblerp() {
                         vec2f(4, 0),
                         vec2f(4, 4),
                         vec2f(0, 4));
-    println!("{:?}", q.iblerp(vec2f(2, 2)));
-    assert_eq!(false, true);
+    assert_eq!(q.iblerp(vec2f(2, 2)),
+               IBLerpResult::OneSolution(vec2f(0.5, 0.5)));
 }
 
 /// Vector with three f32 components
