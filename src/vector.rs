@@ -55,6 +55,13 @@ impl Sub for Vec2f {
     }
 }
 
+impl Mul<f32> for Vec2f {
+    type Output = Vec2f;
+    fn mul(self, s: f32) -> Vec2f {
+        Vec2f::new(self.x * s, self.y * s)
+    }
+}
+
 impl Div<f32> for Vec2f {
     type Output = Vec2f;
     fn div(self, s: f32) -> Vec2f {
