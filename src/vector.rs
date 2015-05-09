@@ -33,6 +33,32 @@ impl Vec2f {
     }
 }
 
+impl Sub for Vec2f {
+    type Output = Vec2f;
+    fn sub(self, v: Vec2f) -> Vec2f {
+        Vec2f::new(self.x - v.x, self.y - v.y)
+    }
+}
+
+pub struct Quad2f {
+    pub points: (Vec2f, Vec2f, Vec2f, Vec2f)
+}
+
+impl Quad2f {
+    pub fn new(points: (Vec2f, Vec2f, Vec2f, Vec2f)) -> Quad2f {
+        Quad2f {
+            points: points
+        }
+    }
+
+    // Adapted from stackoverflow.com/questions/808441
+    pub fn iblerp(&self, point: Vec2f) {
+        let a = (self.points.0 - point).cross(self.points.0 - self.points.2);
+        let b = ( (self.points.0 - point).cross(self.points.1 - self.points.3) + (self.points.1 - point).cross(self.points.0 - self.points.2) ) / 2;
+        let c = (self.points.1 - point).cross(self.points.1 - self.points.3);
+    }
+}
+
 /// Vector with three f32 components
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vec3f {
