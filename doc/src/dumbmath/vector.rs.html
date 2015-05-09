@@ -468,6 +468,12 @@
 <span id="426">426</span>
 <span id="427">427</span>
 <span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -642,6 +648,12 @@
             <span class='kw'>let</span> <span class='ident'>s1</span> <span class='op'>=</span> (<span class='ident'>left</span> <span class='op'>-</span> <span class='ident'>right</span>) <span class='op'>/</span> <span class='ident'>den</span>;
             <span class='ident'>IBLerpResult</span>::<span class='ident'>TwoSolutions</span>(<span class='ident'>calc_st</span>(<span class='ident'>s0</span>), <span class='ident'>calc_st</span>(<span class='ident'>s1</span>))
         }
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>blerp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>u</span>: <span class='ident'>f32</span>, <span class='ident'>v</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2f</span> {
+        <span class='kw'>let</span> <span class='ident'>rb</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>.<span class='ident'>lerp</span>(<span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>1</span>, <span class='ident'>u</span>);
+        <span class='kw'>let</span> <span class='ident'>rt</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>3</span>.<span class='ident'>lerp</span>(<span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>2</span>, <span class='ident'>v</span>);
+        <span class='ident'>rb</span>.<span class='ident'>lerp</span>(<span class='ident'>rt</span>, <span class='ident'>v</span>)
     }
 }
 
