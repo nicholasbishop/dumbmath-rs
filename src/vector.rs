@@ -163,6 +163,17 @@ impl CastF32 for u32 { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for u64 { fn as_f32(&self) -> f32 { *self as f32 } }
 impl CastF32 for usize { fn as_f32(&self) -> f32 { *self as f32 } }
 
+/// Create a Vec2f from x and y inputs
+///
+/// This is a convenience function that provides a little more
+/// flexibility than Vec2f::new in that it will happily take numbers
+/// that aren't f32 (including a mix of different types for each
+/// component). Vec2f is such a common type that it seems reasonable
+/// to provide a little extra ease of use.
+pub fn vec2f<X: CastF32, Y: CastF32>(x: X, y: Y) -> Vec2f {
+    Vec2f { x: x.as_f32(), y: y.as_f32() }
+}
+
 /// Create a Vec3f from x, y, and z inputs
 ///
 /// This is a convenience function that provides a little more
