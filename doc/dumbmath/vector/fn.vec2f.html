@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `Rangef` type in crate `dumbmath`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, Rangef">
+    <meta name="description" content="API documentation for the Rust `vec2f` fn in crate `dumbmath`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, vec2f">
 
-    <title>dumbmath::segment::Rangef - Rust</title>
+    <title>dumbmath::vector::vec2f - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>segment</a></p><script>window.sidebarCurrent = {name: 'Rangef', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>vector</a></p><script>window.sidebarCurrent = {name: 'vec2f', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,11 +40,18 @@
         </form>
     </nav>
 
-    <section id='main' class="content type">
-<h1 class='fqn'><span class='in-band'><a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>segment</a>::<wbr><a class='type' href=''>Rangef</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="#" title="collapse all docs">[-]</a>
-        </span><a id='src-938' class='srclink' href='../../src/dumbmath/segment.rs.html#22' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type Rangef = <a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;;</pre></section>
+    <section id='main' class="content fn">
+<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>vector</a>::<wbr><a class='fn' href=''>vec2f</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="#" title="collapse all docs">[&minus;]</a>
+        </span><a id='src-4463' class='srclink' href='../../src/dumbmath/vector.rs.html#275-277' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn vec2f&lt;X: <a class='trait' href='../../dumbmath/vector/trait.CastF32.html' title='dumbmath::vector::CastF32'>CastF32</a>, Y: <a class='trait' href='../../dumbmath/vector/trait.CastF32.html' title='dumbmath::vector::CastF32'>CastF32</a>&gt;(x: X, y: Y) -&gt; <a class='struct' href='../../dumbmath/vector/struct.Vec2f.html' title='dumbmath::vector::Vec2f'>Vec2f</a></pre><div class='docblock'><p>Create a Vec2f from x and y inputs</p>
+
+<p>This is a convenience function that provides a little more
+flexibility than Vec2f::new in that it will happily take numbers
+that aren&#39;t f32 (including a mix of different types for each
+component). Vec2f is such a common type that it seems reasonable
+to provide a little extra ease of use.</p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
