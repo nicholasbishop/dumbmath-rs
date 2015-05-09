@@ -14,6 +14,25 @@
 
 use std::ops::{Add, Div, Mul, Sub};
 
+/// Vector with two f32 components
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Vec2f {
+    pub x: f32,
+    pub y: f32
+}
+
+impl Vec2f {
+    /// Create a Vec2f from two components
+    pub fn new(x: f32, y: f32) -> Vec2f {
+        Vec2f { x: x,
+                y: y }
+    }
+
+    pub fn cross(&self, other: Vec2f) -> f32 {
+        self.x * other.y - self.y * other.x
+    }
+}
+
 /// Vector with three f32 components
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vec3f {
