@@ -47,6 +47,22 @@ impl Sub for Vec2f {
     }
 }
 
+impl Div<f32> for Vec2f {
+    type Output = Vec2f;
+    fn div(self, s: f32) -> Vec2f {
+        Vec2f::new(self.x / s, self.y / s)
+    }
+}
+
+/// 2D Quadrilateral
+/// 
+/// ```
+///   p3____p2
+///    |    |
+///    |____|
+///   p0    p1
+/// ```
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Quad2f {
     pub points: (Vec2f, Vec2f, Vec2f, Vec2f)
 }
