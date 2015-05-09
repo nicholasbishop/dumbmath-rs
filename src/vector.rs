@@ -89,7 +89,7 @@ impl Line2f {
 
 /// 2D Quadrilateral
 /// 
-/// ```
+/// ```text
 ///   p3____p2
 ///    |    |
 ///    |____|
