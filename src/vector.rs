@@ -172,6 +172,12 @@ impl Quad2f {
             IBLerpResult::TwoSolutions(calc_st(s0), calc_st(s1))
         }
     }
+
+    pub fn blerp(&self, u: f32, v: f32) -> Vec2f {
+        let rb = self.points.0.lerp(self.points.1, u);
+        let rt = self.points.3.lerp(self.points.2, v);
+        rb.lerp(rt, v)
+    }
 }
 
 #[test]
