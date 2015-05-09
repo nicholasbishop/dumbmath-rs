@@ -31,6 +31,14 @@ impl Vec2f {
     pub fn cross(&self, other: Vec2f) -> f32 {
         self.x * other.y - self.y * other.x
     }
+
+    pub fn lerp(&self, other: Vec2f, t: f32) -> Vec2f {
+        *self * (1.0 - t) + other * t
+    }
+
+    pub fn dot(&self, other: Vec2f) -> f32 {
+        self.x * other.x + self.y * other.y
+    }
 }
 
 impl Add for Vec2f {
