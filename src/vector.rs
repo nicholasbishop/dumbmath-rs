@@ -33,6 +33,13 @@ impl Vec2f {
     }
 }
 
+impl Add for Vec2f {
+    type Output = Vec2f;
+    fn add(self, v: Vec2f) -> Vec2f {
+        Vec2f::new(self.x + v.x, self.y + v.y)
+    }
+}
+
 impl Sub for Vec2f {
     type Output = Vec2f;
     fn sub(self, v: Vec2f) -> Vec2f {
