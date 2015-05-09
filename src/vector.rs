@@ -68,9 +68,9 @@ pub struct Quad2f {
 }
 
 impl Quad2f {
-    pub fn new(points: (Vec2f, Vec2f, Vec2f, Vec2f)) -> Quad2f {
+    pub fn new(a: Vec2f, b: Vec2f, c: Vec2f, d: Vec2f) -> Quad2f {
         Quad2f {
-            points: points
+            points: (a, b, c, d)
         }
     }
 
