@@ -69,6 +69,24 @@ impl Div<f32> for Vec2f {
     }
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Line2f {
+    pub points: (Vec2f, Vec2f)
+}
+
+impl Line2f {
+    pub fn new(a: Vec2f, b: Vec2f) -> Line2f {
+        Line2f { points: (a, b) }
+    }
+
+    pub fn closest_parametric_point(&self, point: Vec2f) -> f32 {
+        let p0p = point - self.points.0;
+        let p0p1 = self.points.1 - self.points.0;
+
+        p0p.dot(p0p1) / p0p1.dot(p0p1)
+    }
+}
+
 /// 2D Quadrilateral
 /// 
 /// ```
