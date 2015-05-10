@@ -28,31 +28,31 @@ impl Vec2f {
                 y: y }
     }
 
-    pub fn cross(&self, other: Vec2f) -> f32 {
+    pub fn cross(self, other: Vec2f) -> f32 {
         self.x * other.y - self.y * other.x
     }
 
-    pub fn lerp(&self, other: Vec2f, t: f32) -> Vec2f {
-        *self * (1.0 - t) + other * t
+    pub fn lerp(self, other: Vec2f, t: f32) -> Vec2f {
+        self * (1.0 - t) + other * t
     }
 
-    pub fn dot(&self, other: Vec2f) -> f32 {
+    pub fn dot(self, other: Vec2f) -> f32 {
         self.x * other.x + self.y * other.y
     }
 
-    pub fn vec3f(&self) -> Vec3f {
+    pub fn vec3f(self) -> Vec3f {
         Vec3f::new(self.x, self.y, 0.0)
     }
 
-    pub fn magnitude_squared(&self) -> f32 {
-        self.dot(*self)
+    pub fn magnitude_squared(self) -> f32 {
+        self.dot(self)
     }
 
-    pub fn magnitude(&self) -> f32 {
+    pub fn magnitude(self) -> f32 {
         self.magnitude_squared().sqrt()
     }
 
-    pub fn normalized(&self) -> Option<Vec2f> {
+    pub fn normalized(self) -> Option<Vec2f> {
         let m = self.magnitude();
         if m == 0.0 {
             None
@@ -101,7 +101,7 @@ impl Line2f {
         Line2f { points: (a, b) }
     }
 
-    pub fn closest_parametric_point(&self, point: Vec2f) -> f32 {
+    pub fn closest_parametric_point(self, point: Vec2f) -> f32 {
         let p0p = point - self.points.0;
         let p0p1 = self.points.1 - self.points.0;
 
@@ -143,7 +143,7 @@ impl Quad2f {
     /// Inverse bilinear interpolation
     ///
     /// Adapted from stackoverflow.com/questions/808441
-    pub fn iblerp(&self, point: Vec2f) -> IBLerpResult {
+    pub fn iblerp(self, point: Vec2f) -> IBLerpResult {
         let p0mp = self.points.0 - point;
         let p1mp = self.points.1 - point;
         let p0mp3 = self.points.0 - self.points.3;
@@ -195,7 +195,7 @@ impl Quad2f {
         }
     }
 
-    pub fn blerp(&self, uv: Vec2f) -> Vec2f {
+    pub fn blerp(self, uv: Vec2f) -> Vec2f {
         let rb = self.points.0.lerp(self.points.1, uv.x);
         let rt = self.points.3.lerp(self.points.2, uv.x);
         rb.lerp(rt, uv.y)
@@ -272,25 +272,25 @@ impl Vec3f {
     }
 
     /// Length of the vector
-    pub fn magnitude(&self) -> f32 {
+    pub fn magnitude(self) -> f32 {
         self.magnitude_squared().sqrt()
     }
 
     /// Create a normalized copy, or None if the magnitude is zero
-    pub fn normalized(&self) -> Option<Vec3f> {
+    pub fn normalized(self) -> Option<Vec3f> {
         let m = self.magnitude();
         if m == 0.0 {
             None
         }
         else {
             let f = 1.0 / m;
-            Some((*self) * f)
+            Some(self * f)
         }
     }
 
     /// Projection of `self` into `v`, or None if the magnitude of
     /// `b` is zero.
-    pub fn project_onto(&self, v: Vec3f) -> Option<Vec3f> {
+    pub fn project_onto(self, v: Vec3f) -> Option<Vec3f> {
         if v == ZERO_3F {
             None
         }
@@ -304,22 +304,22 @@ impl Vec3f {
 pub const ZERO_3F: Vec3f = Vec3f { x: 0.0, y: 0.0, z: 0.0 };
 
 /// Convert a numeric type to an f32
-pub trait CastF32 { fn as_f32(&self) -> f32; }
+pub trait CastF32 { fn as_f32(self) -> f32; }
 
-impl CastF32 for f32 { fn as_f32(&self) -> f32 { *self } }
-impl CastF32 for f64 { fn as_f32(&self) -> f32 { *self as f32 } }
+impl CastF32 for f32 { fn as_f32(self) -> f32 { self } }
+impl CastF32 for f64 { fn as_f32(self) -> f32 { self as f32 } }
 
-impl CastF32 for i8  { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for i16 { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for i32 { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for i64 { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for isize { fn as_f32(&self) -> f32 { *self as f32 } }
+impl CastF32 for i8  { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for i16 { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for i32 { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for i64 { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for isize { fn as_f32(self) -> f32 { self as f32 } }
 
-impl CastF32 for u8  { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for u16 { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for u32 { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for u64 { fn as_f32(&self) -> f32 { *self as f32 } }
-impl CastF32 for usize { fn as_f32(&self) -> f32 { *self as f32 } }
+impl CastF32 for u8  { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for u16 { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for u32 { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for u64 { fn as_f32(self) -> f32 { self as f32 } }
+impl CastF32 for usize { fn as_f32(self) -> f32 { self as f32 } }
 
 /// Create a Vec2f from x and y inputs
 ///
