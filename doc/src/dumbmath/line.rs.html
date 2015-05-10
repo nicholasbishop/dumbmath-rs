@@ -176,7 +176,7 @@
 <span class='comment'>// See the License for the specific language governing permissions and</span>
 <span class='comment'>// limitations under the License.</span>
 
-<span class='kw'>use</span> <span class='ident'>vector</span>::{<span class='ident'>Vec3f</span>, <span class='ident'>dot3</span>};
+<span class='kw'>use</span> <span class='ident'>vector</span>::<span class='ident'>Vec3f</span>;
 
 <span class='doccomment'>/// Line of infinite length represented by two distinct points it</span>
 <span class='doccomment'>/// passes through.</span>
@@ -207,17 +207,17 @@
     <span class='doccomment'>/// Adapted from &quot;Real-Time Collision Detection&quot; by Christer</span>
     <span class='doccomment'>/// Ericson, published by Morgan Kaufmann Publishers, Copyright</span>
     <span class='doccomment'>/// 2005 Elsevier Inc</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>closest_points_between_lines</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>,
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>closest_points_between_lines</span>(<span class='self'>self</span>,
                                         <span class='ident'>line</span>: <span class='ident'>Line3f</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>f32</span>, <span class='ident'>f32</span>)<span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>d1</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>1</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>;
         <span class='kw'>let</span> <span class='ident'>d2</span> <span class='op'>=</span> <span class='ident'>line</span>.<span class='ident'>points</span>.<span class='number'>1</span> <span class='op'>-</span> <span class='ident'>line</span>.<span class='ident'>points</span>.<span class='number'>0</span>;
         <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span> <span class='op'>-</span> <span class='ident'>line</span>.<span class='ident'>points</span>.<span class='number'>0</span>;
 
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>d1</span>, <span class='ident'>d1</span>);
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>d1</span>, <span class='ident'>d2</span>);
-        <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>d1</span>, <span class='ident'>r</span>);
-        <span class='kw'>let</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>d2</span>, <span class='ident'>d2</span>);
-        <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>d2</span>, <span class='ident'>r</span>);
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>d1</span>.<span class='ident'>dot</span>(<span class='ident'>d1</span>);
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>d1</span>.<span class='ident'>dot</span>(<span class='ident'>d2</span>);
+        <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>d1</span>.<span class='ident'>dot</span>(<span class='ident'>r</span>);
+        <span class='kw'>let</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>d2</span>.<span class='ident'>dot</span>(<span class='ident'>d2</span>);
+        <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>d2</span>.<span class='ident'>dot</span>(<span class='ident'>r</span>);
 
         <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='ident'>a</span> <span class='op'>*</span> <span class='ident'>e</span> <span class='op'>-</span> <span class='ident'>b</span> <span class='op'>*</span> <span class='ident'>b</span>;
         <span class='kw'>if</span> <span class='ident'>d</span> <span class='op'>==</span> <span class='number'>0.0</span> {

@@ -254,17 +254,17 @@
     }
 
     <span class='doccomment'>/// True if `min == max`, false otherwise.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='self'>self</span>.<span class='ident'>min</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>max</span>
     }
 
     <span class='doccomment'>/// Distance between self.min and self.max</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>length</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>max</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>min</span>
     }
 
     <span class='doccomment'>/// Expand `self` as needed to include another range.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expand</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expand</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>min</span> <span class='op'>=</span> <span class='ident'>pomin</span>(<span class='self'>self</span>.<span class='ident'>min</span>, <span class='ident'>other</span>.<span class='ident'>min</span>);
         <span class='self'>self</span>.<span class='ident'>max</span> <span class='op'>=</span> <span class='ident'>pomax</span>(<span class='self'>self</span>.<span class='ident'>max</span>, <span class='ident'>other</span>.<span class='ident'>max</span>);
     }
@@ -273,7 +273,7 @@
 <span class='doccomment'>/// Create range covering the overlap between two ranges, or None if</span>
 <span class='doccomment'>/// there is no overlap.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>range_clamp</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>PartialOrd</span> <span class='op'>+</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Output</span><span class='op'>=</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>
-    (<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>)
+    (<span class='ident'>a</span>: <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>b</span>: <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>)
      <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>min</span> <span class='op'>=</span> <span class='ident'>pomax</span>(<span class='ident'>a</span>.<span class='ident'>min</span>, <span class='ident'>b</span>.<span class='ident'>min</span>);
     <span class='kw'>let</span> <span class='ident'>max</span> <span class='op'>=</span> <span class='ident'>pomin</span>(<span class='ident'>a</span>.<span class='ident'>max</span>, <span class='ident'>b</span>.<span class='ident'>max</span>);
@@ -287,8 +287,8 @@
 }
 
 <span class='doccomment'>/// Create range covering both ranges (and any gap between them).</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>range_combine</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>PartialOrd</span> <span class='op'>+</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Output</span><span class='op'>=</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
-                                                           <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>)
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>range_combine</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>PartialOrd</span> <span class='op'>+</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Output</span><span class='op'>=</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>(<span class='ident'>a</span>: <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
+                                                           <span class='ident'>b</span>: <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>)
                                                            <span class='op'>-&gt;</span> <span class='ident'>InclusiveRange</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='ident'>pomin</span>(<span class='ident'>a</span>.<span class='ident'>min</span>, <span class='ident'>b</span>.<span class='ident'>min</span>),
                         <span class='ident'>pomax</span>(<span class='ident'>a</span>.<span class='ident'>max</span>, <span class='ident'>b</span>.<span class='ident'>max</span>))
@@ -313,42 +313,42 @@
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_range_clamp</span>() {
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>),
-                        <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>)) <span class='op'>==</span>
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>),
+                        <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>)) <span class='op'>==</span>
             <span class='prelude-val'>Some</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>)));
 
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>),
-                        <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>3</span>)) <span class='op'>==</span>
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>),
+                        <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>3</span>)) <span class='op'>==</span>
             <span class='prelude-val'>None</span>);
 
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>3</span>),
-                        <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>)) <span class='op'>==</span>
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>2</span>, <span class='number'>3</span>),
+                        <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>)) <span class='op'>==</span>
             <span class='prelude-val'>None</span>);
 
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>),
-                        <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>3</span>)) <span class='op'>==</span>
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>),
+                        <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>3</span>)) <span class='op'>==</span>
             <span class='prelude-val'>Some</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>2</span>)));
 
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>3</span>),
-                        <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>)) <span class='op'>==</span>
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>3</span>),
+                        <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>)) <span class='op'>==</span>
             <span class='prelude-val'>Some</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>2</span>)));
 
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>3.0</span>),
-                        <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>2.0</span>)) <span class='op'>==</span>
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_clamp</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>3.0</span>),
+                        <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>2.0</span>)) <span class='op'>==</span>
             <span class='prelude-val'>Some</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>2.0</span>)));
 }
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_range_expand</span>() {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>);
-    <span class='ident'>r</span>.<span class='ident'>expand</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='op'>-</span><span class='number'>1</span>, <span class='number'>2</span>));
+    <span class='ident'>r</span>.<span class='ident'>expand</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='op'>-</span><span class='number'>1</span>, <span class='number'>2</span>));
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>r</span> <span class='op'>==</span> <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='op'>-</span><span class='number'>1</span>, <span class='number'>2</span>));
 }
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_range_combine</span>() {
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_combine</span>(<span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>),
-                          <span class='kw-2'>&amp;</span><span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='op'>-</span><span class='number'>2</span>, <span class='number'>1</span>)) <span class='op'>==</span>
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>range_combine</span>(<span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>2</span>),
+                          <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='op'>-</span><span class='number'>2</span>, <span class='number'>1</span>)) <span class='op'>==</span>
             <span class='ident'>InclusiveRange</span>::<span class='ident'>new</span>(<span class='op'>-</span><span class='number'>2</span>, <span class='number'>2</span>));
 }
 

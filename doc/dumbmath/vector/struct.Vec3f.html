@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>vector</a>::<wbr><a class='struct' href=''>Vec3f</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="#" title="collapse all docs">[&minus;]</a>
-        </span><a id='src-4052' class='srclink' href='../../src/dumbmath/vector.rs.html#217-221' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3997' class='srclink' href='../../src/dumbmath/vector.rs.html#217-221' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Vec3f {
     pub x: <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub y: <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
@@ -57,13 +57,23 @@
 <div class='docblock'><p>Create a Vec3f from three components</p>
 </div><h4 id='method.from_scalar' class='method'><code>fn <a href='#method.from_scalar' class='fnname'>from_scalar</a>&lt;T: <a class='trait' href='../../dumbmath/vector/trait.CastF32.html' title='dumbmath::vector::CastF32'>CastF32</a>&gt;(s: T) -&gt; <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a></code></h4>
 <div class='docblock'><p>Create a Vec3f with all components set to the same scalar</p>
-</div><h4 id='method.magnitude_squared' class='method'><code>fn <a href='#method.magnitude_squared' class='fnname'>magnitude_squared</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></h4>
+</div><h4 id='method.dot' class='method'><code>fn <a href='#method.dot' class='fnname'>dot</a>(self, v: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></h4>
+<div class='docblock'><p>Inner product</p>
+</div><h4 id='method.cross' class='method'><code>fn <a href='#method.cross' class='fnname'>cross</a>(self, v: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>) -&gt; <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a></code></h4>
+<div class='docblock'><p>Cross product</p>
+</div><h4 id='method.distance' class='method'><code>fn <a href='#method.distance' class='fnname'>distance</a>(self, v: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></h4>
+<div class='docblock'><p>Distance to another point</p>
+</div><h4 id='method.lerp' class='method'><code>fn <a href='#method.lerp' class='fnname'>lerp</a>(self, p: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>, t: <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a></code></h4>
+<div class='docblock'><p>Linearly interpolate between two points by the factor
+<code>t</code>. When <code>t</code> is zero the result is <code>self</code>, and when <code>t</code> is
+one the result is <code>p</code>. The range of <code>t</code> is not clamped.</p>
+</div><h4 id='method.magnitude_squared' class='method'><code>fn <a href='#method.magnitude_squared' class='fnname'>magnitude_squared</a>(self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></h4>
 <div class='docblock'><p>Squared length of the vector</p>
-</div><h4 id='method.magnitude' class='method'><code>fn <a href='#method.magnitude' class='fnname'>magnitude</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></h4>
+</div><h4 id='method.magnitude' class='method'><code>fn <a href='#method.magnitude' class='fnname'>magnitude</a>(self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></h4>
 <div class='docblock'><p>Length of the vector</p>
-</div><h4 id='method.normalized' class='method'><code>fn <a href='#method.normalized' class='fnname'>normalized</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>&gt;</code></h4>
+</div><h4 id='method.normalized' class='method'><code>fn <a href='#method.normalized' class='fnname'>normalized</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>&gt;</code></h4>
 <div class='docblock'><p>Create a normalized copy, or None if the magnitude is zero</p>
-</div><h4 id='method.project_onto' class='method'><code>fn <a href='#method.project_onto' class='fnname'>project_onto</a>(&amp;self, v: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>&gt;</code></h4>
+</div><h4 id='method.project_onto' class='method'><code>fn <a href='#method.project_onto' class='fnname'>project_onto</a>(self, v: <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a>&gt;</code></h4>
 <div class='docblock'><p>Projection of <code>self</code> into <code>v</code>, or None if the magnitude of
 <code>b</code> is zero.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='core::ops::Add'>Add</a> for <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a></code></h3><div class='impl-items'><h4 id='assoc_type.Output' class='type'><code>type Output = <a class='struct' href='../../dumbmath/vector/struct.Vec3f.html' title='dumbmath::vector::Vec3f'>Vec3f</a></code></h4>

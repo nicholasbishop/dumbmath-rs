@@ -122,23 +122,23 @@
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Radians</span>(<span class='ident'>f32</span>);
 
 <span class='kw'>impl</span> <span class='ident'>Degrees</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>value</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
-        <span class='kw'>let</span> <span class='ident'>Degrees</span>(<span class='ident'>v</span>) <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>value</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='kw'>let</span> <span class='ident'>Degrees</span>(<span class='ident'>v</span>) <span class='op'>=</span> <span class='self'>self</span>;
         <span class='ident'>v</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_radians</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Radians</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_radians</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Radians</span> {
         <span class='ident'>Radians</span>(<span class='self'>self</span>.<span class='ident'>value</span>() <span class='op'>*</span> (<span class='ident'>f32</span>::<span class='ident'>consts</span>::<span class='ident'>PI</span> <span class='op'>/</span> <span class='number'>180.0</span>))
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>Radians</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>value</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
-        <span class='kw'>let</span> <span class='ident'>Radians</span>(<span class='ident'>v</span>) <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>value</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='kw'>let</span> <span class='ident'>Radians</span>(<span class='ident'>v</span>) <span class='op'>=</span> <span class='self'>self</span>;
         <span class='ident'>v</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_degrees</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Degrees</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_degrees</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Degrees</span> {
         <span class='ident'>Degrees</span>(<span class='self'>self</span>.<span class='ident'>value</span>() <span class='op'>*</span> (<span class='number'>180.0</span> <span class='op'>/</span> <span class='ident'>f32</span>::<span class='ident'>consts</span>::<span class='ident'>PI</span>))
     }
 }

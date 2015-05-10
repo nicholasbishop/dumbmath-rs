@@ -320,7 +320,7 @@
 <span class='comment'>// See the License for the specific language governing permissions and</span>
 <span class='comment'>// limitations under the License.</span>
 
-<span class='kw'>use</span> <span class='ident'>vector</span>::{<span class='ident'>distance3</span>, <span class='ident'>dot3</span>, <span class='ident'>lerp3</span>, <span class='ident'>Vec3f</span>};
+<span class='kw'>use</span> <span class='ident'>vector</span>::<span class='ident'>Vec3f</span>;
 <span class='kw'>use</span> <span class='ident'>range</span>::<span class='ident'>Rangef</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Add</span>;
 
@@ -333,25 +333,25 @@
 
 <span class='kw'>impl</span> <span class='ident'>Segment3f</span> {
     <span class='doccomment'>/// Create a segment between two points</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>start</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec3f</span>, <span class='ident'>end</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>start</span>: <span class='ident'>Vec3f</span>, <span class='ident'>end</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
         <span class='ident'>Segment3f</span> {
-            <span class='ident'>start</span>: <span class='op'>*</span><span class='ident'>start</span>,
-            <span class='ident'>end</span>: <span class='op'>*</span><span class='ident'>end</span>
+            <span class='ident'>start</span>: <span class='ident'>start</span>,
+            <span class='ident'>end</span>: <span class='ident'>end</span>
         }
     }
 
     <span class='doccomment'>/// Get vector from start to end (not normalized)</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_vec3f</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_vec3f</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
         <span class='self'>self</span>.<span class='ident'>end</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start</span>
     }
 
     <span class='doccomment'>/// Length of the line segment</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
-        <span class='ident'>distance3</span>(<span class='self'>self</span>.<span class='ident'>start</span>, <span class='self'>self</span>.<span class='ident'>end</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>length</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='self'>self</span>.<span class='ident'>start</span>.<span class='ident'>distance</span>(<span class='self'>self</span>.<span class='ident'>end</span>)
     }
 
     <span class='doccomment'>/// Create a copy of `self` with endpoints reversed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reversed</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reversed</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
         <span class='ident'>Segment3f</span> {
             <span class='ident'>start</span>: <span class='self'>self</span>.<span class='ident'>end</span>,
             <span class='ident'>end</span>: <span class='self'>self</span>.<span class='ident'>start</span>
@@ -361,13 +361,13 @@
     <span class='doccomment'>/// Convert a distance in coordinate space to a distance in the</span>
     <span class='doccomment'>/// line segment&#39;s parametric space. The sign of the input is</span>
     <span class='doccomment'>/// kept.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>distance_to_parametric_delta</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>distance</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>distance_to_parametric_delta</span>(<span class='self'>self</span>, <span class='ident'>distance</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='ident'>distance</span> <span class='op'>/</span> <span class='self'>self</span>.<span class='ident'>length</span>()
     }
 
     <span class='doccomment'>/// Convert a parametric delta to coordinate space. The sign of</span>
     <span class='doccomment'>/// the input is kept.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>distance_from_parametric_delta</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>delta</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>distance_from_parametric_delta</span>(<span class='self'>self</span>, <span class='ident'>delta</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='ident'>delta</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>length</span>()
     }
 
@@ -375,23 +375,23 @@
     <span class='doccomment'>/// factor `t`. When `t` is zero the result is `self.start`, and</span>
     <span class='doccomment'>/// when `t` is one the result is `self.end`. The range of `t` is</span>
     <span class='doccomment'>/// not clamped.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_from_parametric</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
-        <span class='ident'>lerp3</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>start</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>end</span>, <span class='ident'>t</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_from_parametric</span>(<span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
+        <span class='self'>self</span>.<span class='ident'>start</span>.<span class='ident'>lerp</span>(<span class='self'>self</span>.<span class='ident'>end</span>, <span class='ident'>t</span>)
     }
 
     <span class='doccomment'>/// Treat the range&#39;s start and end as parametric coords. Use</span>
     <span class='doccomment'>/// `point_from_parametric` to interpolate the range into a new</span>
     <span class='doccomment'>/// segment. The output segment is not clamped.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>segment_from_parametric_range</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>Rangef</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
-        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>point_from_parametric</span>(<span class='ident'>r</span>.<span class='ident'>min</span>),
-                       <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>point_from_parametric</span>(<span class='ident'>r</span>.<span class='ident'>max</span>))
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>segment_from_parametric_range</span>(<span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>Rangef</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
+        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>point_from_parametric</span>(<span class='ident'>r</span>.<span class='ident'>min</span>),
+                       <span class='self'>self</span>.<span class='ident'>point_from_parametric</span>(<span class='ident'>r</span>.<span class='ident'>max</span>))
     }
 
     <span class='doccomment'>/// Project another segment onto `self`. The result is a</span>
     <span class='doccomment'>/// parametric range of `self` clamped to [0, 1].</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>project_segment_as_range</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Segment3f</span>) <span class='op'>-&gt;</span> <span class='ident'>Rangef</span> {
-        <span class='ident'>Rangef</span>::<span class='ident'>from_sorting</span>(<span class='self'>self</span>.<span class='ident'>closest_point_to_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='ident'>start</span>).<span class='number'>0</span>,
-                             <span class='self'>self</span>.<span class='ident'>closest_point_to_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='ident'>end</span>).<span class='number'>0</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>project_segment_as_range</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Segment3f</span>) <span class='op'>-&gt;</span> <span class='ident'>Rangef</span> {
+        <span class='ident'>Rangef</span>::<span class='ident'>from_sorting</span>(<span class='self'>self</span>.<span class='ident'>closest_point_to_point</span>(<span class='ident'>other</span>.<span class='ident'>start</span>).<span class='number'>0</span>,
+                             <span class='self'>self</span>.<span class='ident'>closest_point_to_point</span>(<span class='ident'>other</span>.<span class='ident'>end</span>).<span class='number'>0</span>)
     }
 
     <span class='doccomment'>/// Return the squared distance from this segment to the input</span>
@@ -400,29 +400,29 @@
     <span class='doccomment'>/// Adapted from &quot;Real-Time Collision Detection&quot; by Christer</span>
     <span class='doccomment'>/// Ericson, published by Morgan Kaufmann Publishers, Copyright</span>
     <span class='doccomment'>/// 2005 Elsevier Inc</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_distance_squared</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_distance_squared</span>(<span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='kw'>let</span> <span class='ident'>ab</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>end</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start</span>;
         <span class='kw'>let</span> <span class='ident'>ac</span> <span class='op'>=</span> <span class='ident'>point</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>start</span>;
         <span class='kw'>let</span> <span class='ident'>bc</span> <span class='op'>=</span> <span class='ident'>point</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>end</span>;
-        <span class='kw'>let</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>ac</span>, <span class='ident'>ab</span>);
+        <span class='kw'>let</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>ac</span>.<span class='ident'>dot</span>(<span class='ident'>ab</span>);
         <span class='comment'>// Handle cases where c projects outside ab</span>
         <span class='kw'>if</span> <span class='ident'>e</span> <span class='op'>&lt;=</span> <span class='number'>0.0</span> {
-            <span class='ident'>dot3</span>(<span class='ident'>ac</span>, <span class='ident'>ac</span>)
+            <span class='ident'>ac</span>.<span class='ident'>dot</span>(<span class='ident'>ac</span>)
         }
         <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>ab</span>, <span class='ident'>ab</span>);
+            <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>ab</span>.<span class='ident'>dot</span>(<span class='ident'>ab</span>);
             <span class='kw'>if</span> <span class='ident'>e</span> <span class='op'>&gt;=</span> <span class='ident'>f</span> {
-                <span class='ident'>dot3</span>(<span class='ident'>bc</span>, <span class='ident'>bc</span>)
+                <span class='ident'>bc</span>.<span class='ident'>dot</span>(<span class='ident'>bc</span>)
             }
             <span class='kw'>else</span> {
                 <span class='comment'>// Handle cases where c projects onto ab</span>
-                <span class='ident'>dot3</span>(<span class='ident'>ac</span>, <span class='ident'>ac</span>) <span class='op'>-</span> <span class='ident'>e</span> <span class='op'>*</span> <span class='ident'>e</span> <span class='op'>/</span> <span class='ident'>f</span>
+                <span class='ident'>ac</span>.<span class='ident'>dot</span>(<span class='ident'>ac</span>) <span class='op'>-</span> <span class='ident'>e</span> <span class='op'>*</span> <span class='ident'>e</span> <span class='op'>/</span> <span class='ident'>f</span>
             }
         }
     }
 
     <span class='doccomment'>/// Return the distance from this segment to the input `point`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_distance</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_distance</span>(<span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='self'>self</span>.<span class='ident'>point_distance_squared</span>(<span class='ident'>point</span>).<span class='ident'>sqrt</span>()
     }
 
@@ -433,20 +433,20 @@
     <span class='doccomment'>/// Adapted from &quot;Real-Time Collision Detection&quot; by Christer</span>
     <span class='doccomment'>/// Ericson, published by Morgan Kaufmann Publishers, Copyright</span>
     <span class='doccomment'>/// 2005 Elsevier Inc</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>closest_point_to_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>point</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> (<span class='ident'>f32</span>, <span class='ident'>Vec3f</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>closest_point_to_point</span>(<span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> (<span class='ident'>f32</span>, <span class='ident'>Vec3f</span>) {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>start</span>;
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>end</span>;
 
         <span class='kw'>let</span> <span class='ident'>ab</span> <span class='op'>=</span> <span class='ident'>b</span> <span class='op'>-</span> <span class='ident'>a</span>;
-        <span class='comment'>// Project point onto ab, but deferring divide by dot3(ab, ab)</span>
-        <span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='op'>*</span><span class='ident'>point</span> <span class='op'>-</span> <span class='ident'>a</span>, <span class='ident'>ab</span>);
+        <span class='comment'>// Project point onto ab, but deferring divide by ab.dot(ab)</span>
+        <span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> (<span class='ident'>point</span> <span class='op'>-</span> <span class='ident'>a</span>).<span class='ident'>dot</span>(<span class='ident'>ab</span>);
         <span class='kw'>if</span> <span class='ident'>t</span> <span class='op'>&lt;=</span> <span class='number'>0.0f32</span> {
             <span class='comment'>// point projects outside the [a,b] interval, on the a</span>
             <span class='comment'>// side; clamp to a</span>
             (<span class='number'>0.0f32</span>, <span class='ident'>a</span>)
         } <span class='kw'>else</span> {
             <span class='comment'>// Always nonnegative since denom = ||ab|| ∧ 2</span>
-            <span class='kw'>let</span> <span class='ident'>denom</span> <span class='op'>=</span> <span class='ident'>dot3</span>(<span class='ident'>ab</span>, <span class='ident'>ab</span>); 
+            <span class='kw'>let</span> <span class='ident'>denom</span> <span class='op'>=</span> <span class='ident'>ab</span>.<span class='ident'>dot</span>(<span class='ident'>ab</span>);
             <span class='kw'>if</span> <span class='ident'>t</span> <span class='op'>&gt;=</span> <span class='ident'>denom</span> {
                 <span class='comment'>// point projects outside the [a,b] interval, on the b</span>
                 <span class='comment'>// side; clamp to b</span>
@@ -464,7 +464,7 @@
 <span class='kw'>impl</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>Vec3f</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Segment3f</span> {
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>;
     <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, <span class='ident'>v</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span>(<span class='self'>self</span>.<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>v</span>), <span class='kw-2'>&amp;</span>(<span class='self'>self</span>.<span class='ident'>end</span> <span class='op'>+</span> <span class='ident'>v</span>))
+        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>v</span>, <span class='self'>self</span>.<span class='ident'>end</span> <span class='op'>+</span> <span class='ident'>v</span>)
     }
 }
 
@@ -475,36 +475,36 @@
     <span class='kw'>use</span> <span class='ident'>vector</span>::<span class='ident'>vec3f</span>;
 
     <span class='kw'>fn</span> <span class='ident'>make_seg</span>(<span class='ident'>a</span>: <span class='ident'>i32</span>, <span class='ident'>b</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>Segment3f</span> {
-        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='ident'>a</span>, <span class='number'>0</span>, <span class='number'>0</span>), <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='ident'>b</span>, <span class='number'>0</span>, <span class='number'>0</span>))
+        <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>(<span class='ident'>a</span>, <span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>vec3f</span>(<span class='ident'>b</span>, <span class='number'>0</span>, <span class='number'>0</span>))
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_to_vec3f</span>() {
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
-                                  <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>)).<span class='ident'>to_vec3f</span>(),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
+                                  <span class='ident'>vec3f</span>(<span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>)).<span class='ident'>to_vec3f</span>(),
                    <span class='ident'>vec3f</span>(<span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>));
         
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_segment_length</span>() {
-        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
-                               <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>9</span>));
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),
+                               <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>9</span>));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>length</span>(), <span class='number'>9.0</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_segment_reversed</span>() {
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='op'>-</span><span class='number'>1.5</span>, <span class='number'>0</span>, <span class='number'>0</span>);
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>1.0</span>, <span class='number'>0</span>, <span class='number'>0</span>);
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>vec3f</span>(<span class='op'>-</span><span class='number'>1.5</span>, <span class='number'>0</span>, <span class='number'>0</span>);
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>vec3f</span>(<span class='number'>1.0</span>, <span class='number'>0</span>, <span class='number'>0</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>a</span>, <span class='ident'>b</span>).<span class='ident'>reversed</span>(),
                    <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>b</span>, <span class='ident'>a</span>));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_segment_distance_conversion</span>() {
-        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>0</span>),
-                               <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>7</span>, <span class='number'>0</span>));
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>0</span>),
+                               <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>7</span>, <span class='number'>0</span>));
         
         <span class='kw'>let</span> <span class='ident'>inputs</span> <span class='op'>=</span> [
             (<span class='number'>0.0f32</span>, <span class='number'>0.0f32</span>),
@@ -520,8 +520,8 @@
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_point_from_parametric</span>() {
-        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='op'>-</span><span class='number'>1</span>),
-                               <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>3</span>));
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='op'>-</span><span class='number'>1</span>),
+                               <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>3</span>));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>point_from_parametric</span>(<span class='number'>0.0</span>), <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='op'>-</span><span class='number'>1</span>));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>point_from_parametric</span>(<span class='number'>1.0</span>), <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>3</span>));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>point_from_parametric</span>(<span class='number'>0.5</span>), <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>1</span>));
@@ -538,28 +538,28 @@
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_segment_closest_point_to_point</span>() {
-        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>2</span>, <span class='number'>0</span>, <span class='number'>0</span>),
-                               <span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>3</span>, <span class='number'>0</span>, <span class='number'>0</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>closest_point_to_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>1</span>, <span class='number'>0</span>, <span class='number'>0</span>)),
+        <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>Segment3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>(<span class='number'>2</span>, <span class='number'>0</span>, <span class='number'>0</span>),
+                               <span class='ident'>vec3f</span>(<span class='number'>3</span>, <span class='number'>0</span>, <span class='number'>0</span>));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>closest_point_to_point</span>(<span class='ident'>vec3f</span>(<span class='number'>1</span>, <span class='number'>0</span>, <span class='number'>0</span>)),
                    (<span class='number'>0.0</span>, <span class='ident'>vec3f</span>(<span class='number'>2</span>, <span class='number'>0</span>, <span class='number'>0</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>closest_point_to_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>4</span>, <span class='number'>0</span>, <span class='number'>0</span>)),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>closest_point_to_point</span>(<span class='ident'>vec3f</span>(<span class='number'>4</span>, <span class='number'>0</span>, <span class='number'>0</span>)),
                    (<span class='number'>1.0</span>, <span class='ident'>vec3f</span>(<span class='number'>3</span>, <span class='number'>0</span>, <span class='number'>0</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>closest_point_to_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>vec3f</span>(<span class='number'>2.5</span>, <span class='number'>1</span>, <span class='number'>0</span>)),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>closest_point_to_point</span>(<span class='ident'>vec3f</span>(<span class='number'>2.5</span>, <span class='number'>1</span>, <span class='number'>0</span>)),
                    (<span class='number'>0.5</span>, <span class='ident'>vec3f</span>(<span class='number'>2.5</span>, <span class='number'>0</span>, <span class='number'>0</span>)));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_project_segment_as_range</span>() {
         <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>make_seg</span>(<span class='number'>0</span>, <span class='number'>4</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='kw-2'>&amp;</span><span class='ident'>make_seg</span>(<span class='number'>0</span>, <span class='number'>4</span>)),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='ident'>make_seg</span>(<span class='number'>0</span>, <span class='number'>4</span>)),
                    <span class='ident'>Rangef</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='kw-2'>&amp;</span><span class='ident'>make_seg</span>(<span class='op'>-</span><span class='number'>1</span>, <span class='number'>5</span>)),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='ident'>make_seg</span>(<span class='op'>-</span><span class='number'>1</span>, <span class='number'>5</span>)),
                    <span class='ident'>Rangef</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='kw-2'>&amp;</span><span class='ident'>make_seg</span>(<span class='op'>-</span><span class='number'>1</span>, <span class='op'>-</span><span class='number'>1</span>)),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='ident'>make_seg</span>(<span class='op'>-</span><span class='number'>1</span>, <span class='op'>-</span><span class='number'>1</span>)),
                    <span class='ident'>Rangef</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>0.0</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='kw-2'>&amp;</span><span class='ident'>make_seg</span>(<span class='number'>1</span>, <span class='number'>3</span>)),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='ident'>make_seg</span>(<span class='number'>1</span>, <span class='number'>3</span>)),
                    <span class='ident'>Rangef</span>::<span class='ident'>new</span>(<span class='number'>0.25</span>, <span class='number'>0.75</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='kw-2'>&amp;</span><span class='ident'>make_seg</span>(<span class='number'>3</span>, <span class='number'>1</span>)),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>project_segment_as_range</span>(<span class='ident'>make_seg</span>(<span class='number'>3</span>, <span class='number'>1</span>)),
                    <span class='ident'>Rangef</span>::<span class='ident'>new</span>(<span class='number'>0.25</span>, <span class='number'>0.75</span>));
     }
 }
