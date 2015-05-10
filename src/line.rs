@@ -47,7 +47,7 @@ impl Line3f {
     /// Adapted from "Real-Time Collision Detection" by Christer
     /// Ericson, published by Morgan Kaufmann Publishers, Copyright
     /// 2005 Elsevier Inc
-    pub fn closest_points_between_lines(&self,
+    pub fn closest_points_between_lines(self,
                                         line: Line3f) -> Option<(f32, f32)> {
         let d1 = self.points.1 - self.points.0;
         let d2 = line.points.1 - line.points.0;

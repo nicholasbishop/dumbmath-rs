@@ -53,17 +53,17 @@ impl<T: Copy + PartialOrd + Sub<Output=T>> InclusiveRange<T> {
     }
 
     /// True if `min == max`, false otherwise.
-    pub fn empty(&self) -> bool {
+    pub fn empty(self) -> bool {
         self.min == self.max
     }
 
     /// Distance between self.min and self.max
-    pub fn length(&self) -> T {
+    pub fn length(self) -> T {
         self.max - self.min
     }
 
     /// Expand `self` as needed to include another range.
-    pub fn expand(&mut self, other: &InclusiveRange<T>) {
+    pub fn expand(&mut self, other: InclusiveRange<T>) {
         self.min = pomin(self.min, other.min);
         self.max = pomax(self.max, other.max);
     }
@@ -72,7 +72,7 @@ impl<T: Copy + PartialOrd + Sub<Output=T>> InclusiveRange<T> {
 /// Create range covering the overlap between two ranges, or None if
 /// there is no overlap.
 pub fn range_clamp<T: Copy + PartialOrd + Sub<Output=T>>
-    (a: &InclusiveRange<T>, b: &InclusiveRange<T>)
+    (a: InclusiveRange<T>, b: InclusiveRange<T>)
      -> Option<InclusiveRange<T>> {
     let min = pomax(a.min, b.min);
     let max = pomin(a.max, b.max);
@@ -86,8 +86,8 @@ pub fn range_clamp<T: Copy + PartialOrd + Sub<Output=T>>
 }
 
 /// Create range covering both ranges (and any gap between them).
-pub fn range_combine<T: Copy + PartialOrd + Sub<Output=T>>(a: &InclusiveRange<T>,
-                                                           b: &InclusiveRange<T>)
+pub fn range_combine<T: Copy + PartialOrd + Sub<Output=T>>(a: InclusiveRange<T>,
+                                                           b: InclusiveRange<T>)
                                                            -> InclusiveRange<T> {
     InclusiveRange::new(pomin(a.min, b.min),
                         pomax(a.max, b.max))
@@ -112,42 +112,42 @@ fn test_empty() {
 
 #[test]
 fn test_range_clamp() {
-    assert!(range_clamp(&InclusiveRange::new(0, 2),
-                        &InclusiveRange::new(0, 2)) ==
+    assert!(range_clamp(InclusiveRange::new(0, 2),
+                        InclusiveRange::new(0, 2)) ==
             Some(InclusiveRange::new(0, 2)));
 
-    assert!(range_clamp(&InclusiveRange::new(0, 1),
-                        &InclusiveRange::new(2, 3)) ==
+    assert!(range_clamp(InclusiveRange::new(0, 1),
+                        InclusiveRange::new(2, 3)) ==
             None);
 
-    assert!(range_clamp(&InclusiveRange::new(2, 3),
-                        &InclusiveRange::new(0, 1)) ==
+    assert!(range_clamp(InclusiveRange::new(2, 3),
+                        InclusiveRange::new(0, 1)) ==
             None);
 
-    assert!(range_clamp(&InclusiveRange::new(0, 2),
-                        &InclusiveRange::new(1, 3)) ==
+    assert!(range_clamp(InclusiveRange::new(0, 2),
+                        InclusiveRange::new(1, 3)) ==
             Some(InclusiveRange::new(1, 2)));
 
-    assert!(range_clamp(&InclusiveRange::new(1, 3),
-                        &InclusiveRange::new(0, 2)) ==
+    assert!(range_clamp(InclusiveRange::new(1, 3),
+                        InclusiveRange::new(0, 2)) ==
             Some(InclusiveRange::new(1, 2)));
 
-    assert!(range_clamp(&InclusiveRange::new(1.0, 3.0),
-                        &InclusiveRange::new(0.0, 2.0)) ==
+    assert!(range_clamp(InclusiveRange::new(1.0, 3.0),
+                        InclusiveRange::new(0.0, 2.0)) ==
             Some(InclusiveRange::new(1.0, 2.0)));
 }
 
 #[test]
 fn test_range_expand() {
     let mut r = InclusiveRange::new(0, 1);
-    r.expand(&InclusiveRange::new(-1, 2));
+    r.expand(InclusiveRange::new(-1, 2));
     assert!(r == InclusiveRange::new(-1, 2));
 }
 
 #[test]
 fn test_range_combine() {
-    assert!(range_combine(&InclusiveRange::new(0, 2),
-                          &InclusiveRange::new(-2, 1)) ==
+    assert!(range_combine(InclusiveRange::new(0, 2),
+                          InclusiveRange::new(-2, 1)) ==
             InclusiveRange::new(-2, 2));
 }
 

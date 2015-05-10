@@ -21,23 +21,23 @@ pub struct Degrees(f32);
 pub struct Radians(f32);
 
 impl Degrees {
-    pub fn value(&self) -> f32 {
-        let Degrees(v) = *self;
+    pub fn value(self) -> f32 {
+        let Degrees(v) = self;
         v
     }
 
-    pub fn to_radians(&self) -> Radians {
+    pub fn to_radians(self) -> Radians {
         Radians(self.value() * (f32::consts::PI / 180.0))
     }
 }
 
 impl Radians {
-    pub fn value(&self) -> f32 {
-        let Radians(v) = *self;
+    pub fn value(self) -> f32 {
+        let Radians(v) = self;
         v
     }
 
-    pub fn to_degrees(&self) -> Degrees {
+    pub fn to_degrees(self) -> Degrees {
         Degrees(self.value() * (180.0 / f32::consts::PI))
     }
 }
