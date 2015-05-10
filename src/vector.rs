@@ -39,6 +39,10 @@ impl Vec2f {
     pub fn dot(&self, other: Vec2f) -> f32 {
         self.x * other.x + self.y * other.y
     }
+
+    pub fn vec3f(&self) -> Vec3f {
+        Vec3f::new(self.x, self.y, 0.0)
+    }
 }
 
 impl Add for Vec2f {
