@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `range_combine` fn in crate `dumbmath`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, range_combine">
+    <meta name="description" content="API documentation for the Rust `quad` mod in crate `dumbmath`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, quad">
 
-    <title>dumbmath::range::range_combine - Rust</title>
+    <title>dumbmath::quad - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>range</a></p><script>window.sidebarCurrent = {name: 'range_combine', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>dumbmath</a></p><script>window.sidebarCurrent = {name: 'quad', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,12 +40,27 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>range</a>::<wbr><a class='fn' href=''>range_combine</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>dumbmath</a>::<wbr><a class='mod' href=''>quad</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2710' href='../../src/dumbmath/range.rs.html#89-94'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn range_combine&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Sub.html' title='core::ops::Sub'>Sub</a>&lt;Output=T&gt;&gt;(a: <a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;T&gt;, b: <a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;T&gt;) -&gt; <a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;T&gt;</pre><div class='docblock'><p>Create range covering both ranges (and any gap between them).</p>
-</div></section>
+        </span><a id='src-1462' href='../../src/dumbmath/quad.rs.html#15-124'>[src]</a></span></h1>
+<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Quad2f.html'
+                               title='dumbmath::quad::Quad2f'>Quad2f</a></td>
+                        <td class='docblock short'><p>2D Quadrilateral</p>
+</td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.IBLerpResult.html'
+                               title='dumbmath::quad::IBLerpResult'>IBLerpResult</a></td>
+                        <td class='docblock short'><p>Return type for Quad2f::iblerp</p>
+</td>
+                    </tr>
+                </table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

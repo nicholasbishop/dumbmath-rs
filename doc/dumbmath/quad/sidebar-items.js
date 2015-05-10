@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Quad2f","2D Quadrilateral"]],"enum":[["IBLerpResult","Return type for Quad2f::iblerp"]]});

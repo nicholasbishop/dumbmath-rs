@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `src/prelude.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
-    <title>lib.rs.html -- source</title>
+    <title>prelude.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -63,7 +63,6 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
-<span id="24">24</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -79,16 +78,15 @@
 <span class='comment'>// See the License for the specific language governing permissions and</span>
 <span class='comment'>// limitations under the License.</span>
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>aabb</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>angle</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>intersect</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>line</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>quad</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>prelude</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>range</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>segment</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>sphere</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>vector</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>aabb</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>angle</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>intersect</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>line</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>quad</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>range</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>segment</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>sphere</span>::<span class='op'>*</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>vector</span>::<span class='op'>*</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
