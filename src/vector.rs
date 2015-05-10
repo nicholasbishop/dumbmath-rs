@@ -43,6 +43,24 @@ impl Vec2f {
     pub fn vec3f(&self) -> Vec3f {
         Vec3f::new(self.x, self.y, 0.0)
     }
+
+    pub fn magnitude_squared(&self) -> f32 {
+        self.dot(self)
+    }
+
+    pub fn magnitude(&self) -> f32 {
+        self.magnitude_squared.sqrt()
+    }
+
+    pub fn normalized(&self) -> Option<Vec2f> {
+        let m = self.magnitude();
+        if m == 0.0 {
+            None
+        }
+        else {
+            Some(Vec2f::new(self.x / m, self.y / m))
+        }
+    }
 }
 
 impl Add for Vec2f {
