@@ -238,6 +238,34 @@ impl Vec3f {
         }
     }
 
+    /// Inner product
+    pub fn dot(self, v: Vec3f) -> f32 {
+        let m = self * v;
+        m.x + m.y + m.z
+    }
+
+    /// Cross product
+    pub fn cross(self, v: Vec3f) -> Vec3f {
+        Vec3f::new(self.y * v.z - self.z * v.y,
+                   self.z * v.x - self.x * v.z,
+                   self.x * v.y - self.y * v.x)
+    }
+
+    /// Distance to another point
+    pub fn distance(self, v: Vec3f) -> f32 {
+        (self - v).magnitude()
+    }
+
+    /// Linearly interpolate between two points by the factor
+    /// `t`. When `t` is zero the result is `self`, and when `t` is
+    /// one the result is `p`. The range of `t` is not clamped.
+    pub fn lerp(self, p: Vec3f, t: f32) -> Vec3f {
+        let n = 1.0 - t;
+        Vec3f::new(self.x * n + p.x * t,
+                   self.y * n + p.y * t,
+                   self.z * n + p.z * t)
+    }
+
     /// Squared length of the vector
     pub fn magnitude_squared(&self) -> f32 {
         dot3(*self, *self)
@@ -407,7 +435,7 @@ fn test_vec3f_magnitude() {
 
 #[test]
 fn test_vec3f_distance() {
-    assert!(distance3(vec3f(0, -4, 0), vec3f(0, 4, 0)) == 8.0);
+    assert_eq!(vec3f(0, -4, 0).distance(vec3f(0, 4, 0)), 8.0);
 }
 
 #[test]
@@ -437,20 +465,20 @@ fn test_vec3f_arithmetic() {
 
 #[test]
 fn test_vec3f_dot() {
-    assert!(dot3(vec3f(1, 2, 3), vec3f(4, 5, 6)) == 32.0);
+    assert_eq!(vec3f(1, 2, 3).dot(vec3f(4, 5, 6)), 32.0);
 }
 
 #[test]
 fn test_vec3f_cross() {
-    assert!(cross(vec3f(1, 0, 0), vec3f(0, 1, 0)) == vec3f(0, 0, 1));
+    assert_eq!(vec3f(1, 0, 0).cross(vec3f(0, 1, 0)), vec3f(0, 0, 1));
 }
 
 #[test]
 fn test_vec3f_lerp() {
     let p0 = vec3f(1.0, 2.0, 3.0);
     let p1 = vec3f(-1.0, -2.0, -3.0);
-    assert!(lerp3(&p0, &p1, 0.0) == p0);
-    assert!(lerp3(&p0, &p1, 0.25) == vec3f(0.5, 1.0, 1.5));
-    assert!(lerp3(&p0, &p1, 0.5) == vec3f(0.0, 0.0, 0.0));
-    assert!(lerp3(&p0, &p1, 1.0) == p1);
+    assert_eq!(p0.lerp(p1, 0.0), p0);
+    assert_eq!(p0.lerp(p1, 0.25), vec3f(0.5, 1.0, 1.5));
+    assert_eq!(p0.lerp(p1, 0.5), vec3f(0.0, 0.0, 0.0));
+    assert_eq!(p0.lerp(p1, 1.0), p1);
 }
