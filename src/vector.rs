@@ -173,10 +173,10 @@ impl Quad2f {
         }
     }
 
-    pub fn blerp(&self, u: f32, v: f32) -> Vec2f {
-        let rb = self.points.0.lerp(self.points.1, u);
-        let rt = self.points.3.lerp(self.points.2, v);
-        rb.lerp(rt, v)
+    pub fn blerp(&self, uv: Vec2f) -> Vec2f {
+        let rb = self.points.0.lerp(self.points.1, uv.x);
+        let rt = self.points.3.lerp(self.points.2, uv.x);
+        rb.lerp(rt, uv.y)
     }
 }
 
