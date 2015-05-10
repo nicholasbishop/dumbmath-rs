@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-pub mod aabb;
-pub mod angle;
-pub mod intersect;
-pub mod line;
-pub mod quad;
-pub mod prelude;
-pub mod range;
-pub mod segment;
-pub mod sphere;
-pub mod vector;
+pub use aabb::*;
+pub use angle::*;
+pub use intersect::*;
+pub use line::*;
+pub use quad::*;
+pub use range::*;
+pub use segment::*;
+pub use sphere::*;
+pub use vector::*;
