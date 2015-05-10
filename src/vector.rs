@@ -392,65 +392,70 @@ impl Sub<f32> for Vec3f {
     }
 }
 
-#[test]
-fn test_vec3f_create() {
-    vec3f(1.0f32, 2, 3i32);
-    assert!(Vec3f::from_scalar(1) == vec3f(1, 1, 1));
-}
+#[cfg(test)]
+mod test {
+    use super::*;
 
-#[test]
-fn test_vec3f_magnitude() {
-    let v = vec3f(-4, 0, 0);
-    assert!(v.magnitude_squared() == 16.0);
-    assert!(v.magnitude() == 4.0);
-}
+    #[test]
+    fn test_vec3f_create() {
+        vec3f(1.0f32, 2, 3i32);
+        assert!(Vec3f::from_scalar(1) == vec3f(1, 1, 1));
+    }
 
-#[test]
-fn test_vec3f_distance() {
-    assert_eq!(vec3f(0, -4, 0).distance(vec3f(0, 4, 0)), 8.0);
-}
+    #[test]
+    fn test_vec3f_magnitude() {
+        let v = vec3f(-4, 0, 0);
+        assert!(v.magnitude_squared() == 16.0);
+        assert!(v.magnitude() == 4.0);
+    }
 
-#[test]
-fn test_vec3f_normalized() {
-    assert_eq!(vec3f(0, 0, 0).normalized(), None);
-    assert_eq!(vec3f(0.5, 0, 0).normalized(), Some(vec3f(1, 0, 0)));
-}
+    #[test]
+    fn test_vec3f_distance() {
+        assert_eq!(vec3f(0, -4, 0).distance(vec3f(0, 4, 0)), 8.0);
+    }
 
-#[test]
-fn test_vec3f_project_onto() {
-    let z = vec3f(0, 0, 0);
-    let a = vec3f(1, 0, 0);
-    let b = vec3f(1, 1, 0);
-    assert_eq!(a.project_onto(z), None);
-    assert_eq!(a.project_onto(b).unwrap(), vec3f(0.5, 0.5, 0));
-}
+    #[test]
+    fn test_vec3f_normalized() {
+        assert_eq!(vec3f(0, 0, 0).normalized(), None);
+        assert_eq!(vec3f(0.5, 0, 0).normalized(), Some(vec3f(1, 0, 0)));
+    }
 
-#[test]
-fn test_vec3f_arithmetic() {
-    let a = vec3f(1, 2, 3);
-    let b = vec3f(4, 5, 6);
-    assert!(a + b == vec3f(5, 7, 9));
-    assert!(a - b == vec3f(-3, -3, -3));
-    assert!(a * b == vec3f(4, 10, 18));
-    assert!(a / b == vec3f(0.25, 2.0 / 5.0, 0.5));
-}
+    #[test]
+    fn test_vec3f_project_onto() {
+        let z = vec3f(0, 0, 0);
+        let a = vec3f(1, 0, 0);
+        let b = vec3f(1, 1, 0);
+        assert_eq!(a.project_onto(z), None);
+        assert_eq!(a.project_onto(b).unwrap(), vec3f(0.5, 0.5, 0));
+    }
 
-#[test]
-fn test_vec3f_dot() {
-    assert_eq!(vec3f(1, 2, 3).dot(vec3f(4, 5, 6)), 32.0);
-}
+    #[test]
+    fn test_vec3f_arithmetic() {
+        let a = vec3f(1, 2, 3);
+        let b = vec3f(4, 5, 6);
+        assert!(a + b == vec3f(5, 7, 9));
+        assert!(a - b == vec3f(-3, -3, -3));
+        assert!(a * b == vec3f(4, 10, 18));
+        assert!(a / b == vec3f(0.25, 2.0 / 5.0, 0.5));
+    }
 
-#[test]
-fn test_vec3f_cross() {
-    assert_eq!(vec3f(1, 0, 0).cross(vec3f(0, 1, 0)), vec3f(0, 0, 1));
-}
+    #[test]
+    fn test_vec3f_dot() {
+        assert_eq!(vec3f(1, 2, 3).dot(vec3f(4, 5, 6)), 32.0);
+    }
 
-#[test]
-fn test_vec3f_lerp() {
-    let p0 = vec3f(1.0, 2.0, 3.0);
-    let p1 = vec3f(-1.0, -2.0, -3.0);
-    assert_eq!(p0.lerp(p1, 0.0), p0);
-    assert_eq!(p0.lerp(p1, 0.25), vec3f(0.5, 1.0, 1.5));
-    assert_eq!(p0.lerp(p1, 0.5), vec3f(0.0, 0.0, 0.0));
-    assert_eq!(p0.lerp(p1, 1.0), p1);
+    #[test]
+    fn test_vec3f_cross() {
+        assert_eq!(vec3f(1, 0, 0).cross(vec3f(0, 1, 0)), vec3f(0, 0, 1));
+    }
+
+    #[test]
+    fn test_vec3f_lerp() {
+        let p0 = vec3f(1.0, 2.0, 3.0);
+        let p1 = vec3f(-1.0, -2.0, -3.0);
+        assert_eq!(p0.lerp(p1, 0.0), p0);
+        assert_eq!(p0.lerp(p1, 0.25), vec3f(0.5, 1.0, 1.5));
+        assert_eq!(p0.lerp(p1, 0.5), vec3f(0.0, 0.0, 0.0));
+        assert_eq!(p0.lerp(p1, 1.0), p1);
+    }
 }
