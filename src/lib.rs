@@ -16,6 +16,7 @@ pub mod aabb;
 pub mod angle;
 pub mod intersect;
 pub mod line;
+pub mod quad;
 pub mod range;
 pub mod segment;
 pub mod sphere;
