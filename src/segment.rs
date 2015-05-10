@@ -29,25 +29,25 @@ pub struct Segment3f {
 
 impl Segment3f {
     /// Create a segment between two points
-    pub fn new(start: &Vec3f, end: &Vec3f) -> Segment3f {
+    pub fn new(start: Vec3f, end: Vec3f) -> Segment3f {
         Segment3f {
-            start: *start,
-            end: *end
+            start: start,
+            end: end
         }
     }
 
     /// Get vector from start to end (not normalized)
-    pub fn to_vec3f(&self) -> Vec3f {
+    pub fn to_vec3f(self) -> Vec3f {
         self.end - self.start
     }
 
     /// Length of the line segment
-    pub fn length(&self) -> f32 {
+    pub fn length(self) -> f32 {
         self.start.distance(self.end)
     }
 
     /// Create a copy of `self` with endpoints reversed.
-    pub fn reversed(&self) -> Segment3f {
+    pub fn reversed(self) -> Segment3f {
         Segment3f {
             start: self.end,
             end: self.start
@@ -57,13 +57,13 @@ impl Segment3f {
     /// Convert a distance in coordinate space to a distance in the
     /// line segment's parametric space. The sign of the input is
     /// kept.
-    pub fn distance_to_parametric_delta(&self, distance: f32) -> f32 {
+    pub fn distance_to_parametric_delta(self, distance: f32) -> f32 {
         distance / self.length()
     }
 
     /// Convert a parametric delta to coordinate space. The sign of
     /// the input is kept.
-    pub fn distance_from_parametric_delta(&self, delta: f32) -> f32 {
+    pub fn distance_from_parametric_delta(self, delta: f32) -> f32 {
         delta * self.length()
     }
 
@@ -71,23 +71,23 @@ impl Segment3f {
     /// factor `t`. When `t` is zero the result is `self.start`, and
     /// when `t` is one the result is `self.end`. The range of `t` is
     /// not clamped.
-    pub fn point_from_parametric(&self, t: f32) -> Vec3f {
+    pub fn point_from_parametric(self, t: f32) -> Vec3f {
         self.start.lerp(self.end, t)
     }
 
     /// Treat the range's start and end as parametric coords. Use
     /// `point_from_parametric` to interpolate the range into a new
     /// segment. The output segment is not clamped.
-    pub fn segment_from_parametric_range(&self, r: Rangef) -> Segment3f {
-        Segment3f::new(&self.point_from_parametric(r.min),
-                       &self.point_from_parametric(r.max))
+    pub fn segment_from_parametric_range(self, r: Rangef) -> Segment3f {
+        Segment3f::new(self.point_from_parametric(r.min),
+                       self.point_from_parametric(r.max))
     }
 
     /// Project another segment onto `self`. The result is a
     /// parametric range of `self` clamped to [0, 1].
-    pub fn project_segment_as_range(&self, other: &Segment3f) -> Rangef {
-        Rangef::from_sorting(self.closest_point_to_point(&other.start).0,
-                             self.closest_point_to_point(&other.end).0)
+    pub fn project_segment_as_range(self, other: Segment3f) -> Rangef {
+        Rangef::from_sorting(self.closest_point_to_point(other.start).0,
+                             self.closest_point_to_point(other.end).0)
     }
 
     /// Return the squared distance from this segment to the input
@@ -96,7 +96,7 @@ impl Segment3f {
     /// Adapted from "Real-Time Collision Detection" by Christer
     /// Ericson, published by Morgan Kaufmann Publishers, Copyright
     /// 2005 Elsevier Inc
-    pub fn point_distance_squared(&self, point: Vec3f) -> f32 {
+    pub fn point_distance_squared(self, point: Vec3f) -> f32 {
         let ab = self.end - self.start;
         let ac = point - self.start;
         let bc = point - self.end;
@@ -118,7 +118,7 @@ impl Segment3f {
     }
 
     /// Return the distance from this segment to the input `point`.
-    pub fn point_distance(&self, point: Vec3f) -> f32 {
+    pub fn point_distance(self, point: Vec3f) -> f32 {
         self.point_distance_squared(point).sqrt()
     }
 
@@ -129,13 +129,13 @@ impl Segment3f {
     /// Adapted from "Real-Time Collision Detection" by Christer
     /// Ericson, published by Morgan Kaufmann Publishers, Copyright
     /// 2005 Elsevier Inc
-    pub fn closest_point_to_point(&self, point: &Vec3f) -> (f32, Vec3f) {
+    pub fn closest_point_to_point(self, point: Vec3f) -> (f32, Vec3f) {
         let a = self.start;
         let b = self.end;
 
         let ab = b - a;
         // Project point onto ab, but deferring divide by ab.dot(ab)
-        let t = (*point - a).dot(ab);
+        let t = (point - a).dot(ab);
         if t <= 0.0f32 {
             // point projects outside the [a,b] interval, on the a
             // side; clamp to a
@@ -160,7 +160,7 @@ impl Segment3f {
 impl Add<Vec3f> for Segment3f {
     type Output = Segment3f;
     fn add(self, v: Vec3f) -> Self::Output {
-        Segment3f::new(&(self.start + v), &(self.end + v))
+        Segment3f::new(self.start + v, self.end + v)
     }
 }
 
@@ -171,36 +171,36 @@ mod test {
     use vector::vec3f;
 
     fn make_seg(a: i32, b: i32) -> Segment3f {
-        Segment3f::new(&vec3f(a, 0, 0), &vec3f(b, 0, 0))
+        Segment3f::new(vec3f(a, 0, 0), vec3f(b, 0, 0))
     }
 
     #[test]
     fn test_to_vec3f() {
-        assert_eq!(Segment3f::new(&vec3f(0, 0, 0),
-                                  &vec3f(2, 3, 4)).to_vec3f(),
+        assert_eq!(Segment3f::new(vec3f(0, 0, 0),
+                                  vec3f(2, 3, 4)).to_vec3f(),
                    vec3f(2, 3, 4));
         
     }
 
     #[test]
     fn test_segment_length() {
-        let s = Segment3f::new(&vec3f(0, 0, 0),
-                               &vec3f(0, 0, 9));
+        let s = Segment3f::new(vec3f(0, 0, 0),
+                               vec3f(0, 0, 9));
         assert_eq!(s.length(), 9.0);
     }
 
     #[test]
     fn test_segment_reversed() {
-        let a = &vec3f(-1.5, 0, 0);
-        let b = &vec3f(1.0, 0, 0);
+        let a = vec3f(-1.5, 0, 0);
+        let b = vec3f(1.0, 0, 0);
         assert_eq!(Segment3f::new(a, b).reversed(),
                    Segment3f::new(b, a));
     }
 
     #[test]
     fn test_segment_distance_conversion() {
-        let s = Segment3f::new(&vec3f(0, 1, 0),
-                               &vec3f(0, 7, 0));
+        let s = Segment3f::new(vec3f(0, 1, 0),
+                               vec3f(0, 7, 0));
         
         let inputs = [
             (0.0f32, 0.0f32),
@@ -216,8 +216,8 @@ mod test {
 
     #[test]
     fn test_point_from_parametric() {
-        let s = Segment3f::new(&vec3f(0, 0, -1),
-                               &vec3f(0, 0, 3));
+        let s = Segment3f::new(vec3f(0, 0, -1),
+                               vec3f(0, 0, 3));
         assert_eq!(s.point_from_parametric(0.0), vec3f(0, 0, -1));
         assert_eq!(s.point_from_parametric(1.0), vec3f(0, 0, 3));
         assert_eq!(s.point_from_parametric(0.5), vec3f(0, 0, 1));
@@ -234,28 +234,28 @@ mod test {
 
     #[test]
     fn test_segment_closest_point_to_point() {
-        let s = Segment3f::new(&vec3f(2, 0, 0),
-                               &vec3f(3, 0, 0));
-        assert_eq!(s.closest_point_to_point(&vec3f(1, 0, 0)),
+        let s = Segment3f::new(vec3f(2, 0, 0),
+                               vec3f(3, 0, 0));
+        assert_eq!(s.closest_point_to_point(vec3f(1, 0, 0)),
                    (0.0, vec3f(2, 0, 0)));
-        assert_eq!(s.closest_point_to_point(&vec3f(4, 0, 0)),
+        assert_eq!(s.closest_point_to_point(vec3f(4, 0, 0)),
                    (1.0, vec3f(3, 0, 0)));
-        assert_eq!(s.closest_point_to_point(&vec3f(2.5, 1, 0)),
+        assert_eq!(s.closest_point_to_point(vec3f(2.5, 1, 0)),
                    (0.5, vec3f(2.5, 0, 0)));
     }
 
     #[test]
     fn test_project_segment_as_range() {
         let s = make_seg(0, 4);
-        assert_eq!(s.project_segment_as_range(&make_seg(0, 4)),
+        assert_eq!(s.project_segment_as_range(make_seg(0, 4)),
                    Rangef::new(0.0, 1.0));
-        assert_eq!(s.project_segment_as_range(&make_seg(-1, 5)),
+        assert_eq!(s.project_segment_as_range(make_seg(-1, 5)),
                    Rangef::new(0.0, 1.0));
-        assert_eq!(s.project_segment_as_range(&make_seg(-1, -1)),
+        assert_eq!(s.project_segment_as_range(make_seg(-1, -1)),
                    Rangef::new(0.0, 0.0));
-        assert_eq!(s.project_segment_as_range(&make_seg(1, 3)),
+        assert_eq!(s.project_segment_as_range(make_seg(1, 3)),
                    Rangef::new(0.25, 0.75));
-        assert_eq!(s.project_segment_as_range(&make_seg(3, 1)),
+        assert_eq!(s.project_segment_as_range(make_seg(3, 1)),
                    Rangef::new(0.25, 0.75));
     }
 }
