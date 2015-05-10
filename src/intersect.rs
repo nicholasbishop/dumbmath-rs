@@ -17,7 +17,7 @@
 // limitations under the License.
 
 use sphere::Sphere3f;
-use vector::{dot3, Vec3f};
+use vector::Vec3f;
 
 /// Calculate closest point on triangle to an input point
 fn triangle_closest_point_to_point(triangle: [Vec3f; 3], p: Vec3f) -> Vec3f {
@@ -29,15 +29,15 @@ fn triangle_closest_point_to_point(triangle: [Vec3f; 3], p: Vec3f) -> Vec3f {
     let ab = b - a;
     let ac = c - a;
     let ap = p - a;
-    let d1 = dot3(ab, ap);
-    let d2 = dot3(ac, ap);
+    let d1 = ab.dot(ap);
+    let d2 = ac.dot(ap);
     if d1 <= 0.0f32 && d2 <= 0.0f32 {
         return a; // barycentric coordinates (1,0,0)
     }
     // Check if P in vertex region outside B
     let bp = p - b;
-    let d3 = dot3(ab, bp);
-    let d4 = dot3(ac, bp);
+    let d3 = ab.dot(bp);
+    let d4 = ac.dot(bp);
     if d3 >= 0.0f32 && d4 <= d3 {
         return b; // barycentric coordinates (0,1,0)
     }
@@ -50,8 +50,8 @@ fn triangle_closest_point_to_point(triangle: [Vec3f; 3], p: Vec3f) -> Vec3f {
     }
     // Check if P in vertex region outside C
     let cp = p - c;
-    let d5 = dot3(ab, cp);
-    let d6 = dot3(ac, cp);
+    let d5 = ab.dot(cp);
+    let d6 = ac.dot(cp);
     if d6 >= 0.0f32 && d5 <= d6 {
         return c; // barycentric coordinates (0,0,1)
     }
@@ -88,7 +88,7 @@ pub fn intersect_sphere_triangle(sphere: &Sphere3f,
     // sphere center to point p is less than the (squared) sphere
     // radius
     let v = p - sphere.center;
-    if dot3(v, v) <= sphere.radius_squared() {
+    if v.magnitude_squared() <= sphere.radius_squared() {
         Some(p)
     }
     else {

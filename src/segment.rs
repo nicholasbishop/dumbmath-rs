@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector::{distance3, dot3, lerp3, Vec3f};
+use vector::Vec3f;
 use range::Rangef;
 use std::ops::Add;
 
@@ -43,7 +43,7 @@ impl Segment3f {
 
     /// Length of the line segment
     pub fn length(&self) -> f32 {
-        distance3(self.start, self.end)
+        self.start.distance(self.end)
     }
 
     /// Create a copy of `self` with endpoints reversed.
@@ -72,7 +72,7 @@ impl Segment3f {
     /// when `t` is one the result is `self.end`. The range of `t` is
     /// not clamped.
     pub fn point_from_parametric(&self, t: f32) -> Vec3f {
-        lerp3(&self.start, &self.end, t)
+        self.start.lerp(self.end, t)
     }
 
     /// Treat the range's start and end as parametric coords. Use
@@ -100,19 +100,19 @@ impl Segment3f {
         let ab = self.end - self.start;
         let ac = point - self.start;
         let bc = point - self.end;
-        let e = dot3(ac, ab);
+        let e = ac.dot(ab);
         // Handle cases where c projects outside ab
         if e <= 0.0 {
-            dot3(ac, ac)
+            ac.dot(ac)
         }
         else {
-            let f = dot3(ab, ab);
+            let f = ab.dot(ab);
             if e >= f {
-                dot3(bc, bc)
+                bc.dot(bc)
             }
             else {
                 // Handle cases where c projects onto ab
-                dot3(ac, ac) - e * e / f
+                ac.dot(ac) - e * e / f
             }
         }
     }
@@ -134,15 +134,15 @@ impl Segment3f {
         let b = self.end;
 
         let ab = b - a;
-        // Project point onto ab, but deferring divide by dot3(ab, ab)
-        let t = dot3(*point - a, ab);
+        // Project point onto ab, but deferring divide by ab.dot(ab)
+        let t = (*point - a).dot(ab);
         if t <= 0.0f32 {
             // point projects outside the [a,b] interval, on the a
             // side; clamp to a
             (0.0f32, a)
         } else {
             // Always nonnegative since denom = ||ab|| ∧ 2
-            let denom = dot3(ab, ab); 
+            let denom = ab.dot(ab);
             if t >= denom {
                 // point projects outside the [a,b] interval, on the b
                 // side; clamp to b

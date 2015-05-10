@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector::{Vec3f, dot3};
+use vector::Vec3f;
 
 /// Line of infinite length represented by two distinct points it
 /// passes through.
@@ -53,11 +53,11 @@ impl Line3f {
         let d2 = line.points.1 - line.points.0;
         let r = self.points.0 - line.points.0;
 
-        let a = dot3(d1, d1);
-        let b = dot3(d1, d2);
-        let c = dot3(d1, r);
-        let e = dot3(d2, d2);
-        let f = dot3(d2, r);
+        let a = d1.dot(d1);
+        let b = d1.dot(d2);
+        let c = d1.dot(r);
+        let e = d2.dot(d2);
+        let f = d2.dot(r);
 
         let d = a * e - b * b;
         if d == 0.0 {

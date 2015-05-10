@@ -267,8 +267,8 @@ impl Vec3f {
     }
 
     /// Squared length of the vector
-    pub fn magnitude_squared(&self) -> f32 {
-        dot3(*self, *self)
+    pub fn magnitude_squared(self) -> f32 {
+        self.dot(self)
     }
 
     /// Length of the vector
@@ -295,7 +295,7 @@ impl Vec3f {
             None
         }
         else {
-            Some(v * (dot3(*self, v) / dot3(v, v)))
+            Some(v * (self.dot(v) / v.magnitude_squared()))
         }
     }
 }
@@ -341,34 +341,6 @@ pub fn vec2f<X: CastF32, Y: CastF32>(x: X, y: Y) -> Vec2f {
 /// to provide a little extra ease of use.
 pub fn vec3f<X: CastF32, Y: CastF32, Z: CastF32>(x: X, y: Y, z: Z) -> Vec3f {
     Vec3f { x: x.as_f32(), y: y.as_f32(), z: z.as_f32() }
-}
-
-/// Inner product of two Vec3f inputs
-pub fn dot3(a: Vec3f, b: Vec3f) -> f32 {
-    let v = a * b;
-    v.x + v.y + v.z
-}
-
-/// Cross product of two Vec3f inputs
-pub fn cross(a: Vec3f, b: Vec3f) -> Vec3f {
-    Vec3f::new(a.y * b.z - a.z * b.y,
-               a.z * b.x - a.x * b.z,
-               a.x * b.y - a.y * b.x)
-}
-
-/// Distance between two points
-pub fn distance3(a: Vec3f, b: Vec3f) -> f32 {
-    (a - b).magnitude()
-}
-
-/// Linearly interpolate between two points by the factor `t`. When
-/// `t` is zero the result is `p0`, and when `t` is one the result is
-/// `p1`. The range of `t` is not clamped.
-pub fn lerp3(p0: &Vec3f, p1: &Vec3f, t: f32) -> Vec3f {
-    let n = 1.0 - t;
-    Vec3f::new(p0.x * n + p1.x * t,
-               p0.y * n + p1.y * t,
-               p0.z * n + p1.z * t)
 }
 
 impl Add for Vec3f {
