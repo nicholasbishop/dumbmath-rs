@@ -45,11 +45,11 @@ impl Vec2f {
     }
 
     pub fn magnitude_squared(&self) -> f32 {
-        self.dot(self)
+        self.dot(*self)
     }
 
     pub fn magnitude(&self) -> f32 {
-        self.magnitude_squared.sqrt()
+        self.magnitude_squared().sqrt()
     }
 
     pub fn normalized(&self) -> Option<Vec2f> {
