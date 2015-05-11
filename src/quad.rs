@@ -163,6 +163,20 @@ mod test {
     use vector::vec2f;
 
     #[test]
+    fn test_inv_bilerp_u() {
+        let q = Quad2f::new(vec2f(0, 0),
+                            vec2f(4, 0),
+                            vec2f(4, 4),
+                            vec2f(0, 4));
+        assert_eq!(q.inv_bilerp_u(vec2f(2, 2)),
+                   InvBilerpResult::OneSolution(0.5));
+        assert_eq!(q.inv_bilerp_u(vec2f(1, 2)),
+                   InvBilerpResult::OneSolution(0.25));
+        assert_eq!(q.inv_bilerp_u(vec2f(1, 3)),
+                   InvBilerpResult::OneSolution(0.25));
+    }
+
+    #[test]
     fn test_iblerp() {
         let q = Quad2f::new(vec2f(0, 0),
                             vec2f(4, 0),
