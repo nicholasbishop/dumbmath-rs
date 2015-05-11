@@ -155,6 +155,22 @@ impl Quad2f {
         }
     }
 
+    pub fn lerp_bottom(self, u: f32) -> Vec2f {
+        self.points.0.lerp(self.points.1, u)
+    }
+
+    pub fn lerp_top(self, u: f32) -> Vec2f {
+        self.points.3.lerp(self.points.2, u)
+    }
+
+    pub fn lerp_left(self, v: f32) -> Vec2f {
+        self.points.0.lerp(self.points.3, v)
+    }
+
+    pub fn lerp_right(self, v: f32) -> Vec2f {
+        self.points.1.lerp(self.points.2, v)
+    }
+
     pub fn blerp(self, uv: Vec2f) -> Vec2f {
         let rb = self.points.0.lerp(self.points.1, uv.x);
         let rt = self.points.3.lerp(self.points.2, uv.x);
