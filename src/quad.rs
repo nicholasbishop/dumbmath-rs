@@ -31,10 +31,21 @@ pub struct Quad2f {
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum IBLerpResult {
     NoSolution,
-    /// One solutions (as parametric coordinates)
+    /// One solutions (as parametric coordinate)
     OneSolution(Vec2f),
     /// Two solutions (as parametric coordinates)
     TwoSolutions(Vec2f, Vec2f),
+    ManySolutions
+}
+
+/// Return type for Quad2f::inv_bilerp_u
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum InvBilerpResult {
+    NoSolution,
+    /// One solutions (as parametric coordinate)
+    OneSolution(f32),
+    /// Two solutions (as parametric coordinates)
+    TwoSolutions(f32, f32),
     ManySolutions
 }
 
@@ -44,6 +55,8 @@ impl Quad2f {
             points: (a, b, c, d)
         }
     }
+
+    // TODO(nicholasbishop): code dedup
 
     /// Inverse bilinear interpolation
     ///
@@ -97,6 +110,43 @@ impl Quad2f {
             let s0 = (left + right) / den;
             let s1 = (left - right) / den;
             IBLerpResult::TwoSolutions(calc_st(s0), calc_st(s1))
+        }
+    }
+
+    /// Calculate horizontal parametric coordinate from cartesian point.
+    pub fn inv_bilerp_u(self, point: Vec2f) -> InvBilerpResult {
+        let p0mp = self.points.0 - point;
+        let p1mp = self.points.1 - point;
+        let p0mp3 = self.points.0 - self.points.3;
+        let p1mp2 = self.points.1 - self.points.2;
+
+        let a = p0mp.cross(p0mp3);
+        let b0 = p0mp.cross(p1mp2);
+        let b1 = p1mp.cross(p0mp3);
+        let b = (b0 + b1) / 2.0;
+        let c = p1mp.cross(p1mp2);
+
+        let den = a - (2.0 * b) + c;
+        if den == 0.0 {
+            let m = a - c;
+            if m == 0.0 {
+                if a == 0.0 {
+                    InvBilerpResult::ManySolutions
+                }
+                else {
+                    InvBilerpResult::NoSolution
+                }
+            }
+            else {
+                InvBilerpResult::OneSolution(a / m)
+            }
+        }
+        else {
+            let left = a - b;
+            let right = (b.powi(2) - a*c).sqrt();
+            let s0 = (left + right) / den;
+            let s1 = (left - right) / den;
+            InvBilerpResult::TwoSolutions(s0, s1)
         }
     }
 

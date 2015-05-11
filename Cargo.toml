@@ -7,4 +7,4 @@ keywords = ["2d", "3d", "aabb", "graphics", "intersection", "math", "vector"]
 license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/nicholasbishop/dumbmath-rs"
-version = "0.2.0"
+version = "0.2.1"
