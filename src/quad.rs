@@ -17,10 +17,15 @@ use vector::{Line2f, Vec2f};
 /// 2D Quadrilateral
 /// 
 /// ```text
-///   p3____p2
-///    |    |
-///    |____|
-///   p0    p1
+///          top
+///     p3________p2
+///      |        |
+///      |        |
+/// left |        | right
+///      |        |
+///      |________|
+///     p0        p1
+///        bottom
 /// ```
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Quad2f {
