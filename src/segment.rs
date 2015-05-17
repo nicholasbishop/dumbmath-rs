@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector::Vec3f;
+use vec3f::Vec3f;
 use range::Rangef;
 use std::ops::Add;
 
@@ -168,7 +168,7 @@ impl Add<Vec3f> for Segment3f {
 mod test {
     use super::*;
     use range::Rangef;
-    use vector::vec3f;
+    use vec3f::vec3f;
 
     fn make_seg(a: i32, b: i32) -> Segment3f {
         Segment3f::new(vec3f(a, 0, 0), vec3f(b, 0, 0))

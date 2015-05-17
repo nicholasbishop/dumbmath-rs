@@ -20,4 +20,5 @@ pub use quad::*;
 pub use range::*;
 pub use segment::*;
 pub use sphere::*;
-pub use vector::*;
+pub use vec2f::*;
+pub use vec3f::*;

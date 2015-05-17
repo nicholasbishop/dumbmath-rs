@@ -16,7 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector::Vec3f;
+use vec3f::Vec3f;
 
 /// Line of infinite length represented by two distinct points it
 /// passes through.
@@ -74,7 +74,7 @@ impl Line3f {
 #[cfg(test)]
 mod test {
     use super::*;
-    use vector::vec3f;
+    use vec3f::vec3f;
 
     #[test]
     fn test_line3f() {

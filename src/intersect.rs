@@ -17,7 +17,7 @@
 // limitations under the License.
 
 use sphere::Sphere3f;
-use vector::Vec3f;
+use vec3f::Vec3f;
 
 /// Calculate closest point on triangle to an input point
 fn triangle_closest_point_to_point(triangle: [Vec3f; 3], p: Vec3f) -> Vec3f {
@@ -99,7 +99,7 @@ pub fn intersect_sphere_triangle(sphere: &Sphere3f,
 #[test]
 fn test_intersect_sphere_triangle() {
     use sphere;
-    use vector::{vec3f, ZERO_3F};
+    use vec3f::{vec3f, ZERO_3F};
 
     let triangle = [
         vec3f(0, 0, 0),

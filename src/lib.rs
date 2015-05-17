@@ -21,4 +21,6 @@ pub mod prelude;
 pub mod range;
 pub mod segment;
 pub mod sphere;
-pub mod vector;
+pub mod util;
+pub mod vec2f;
+pub mod vec3f;

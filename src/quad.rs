@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector::{Line2f, Vec2f};
+use vec2f::{Line2f, Vec2f};
 
 /// 2D Quadrilateral
 /// 
@@ -181,7 +181,7 @@ impl Quad2f {
 #[cfg(test)]
 mod test {
     use super::*;
-    use vector::vec2f;
+    use vec2f::vec2f;
 
     #[test]
     fn test_inv_bilerp_u() {

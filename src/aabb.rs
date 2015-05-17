@@ -13,7 +13,7 @@
 // limitations under the License.
 
 use std::f32;
-use vector::Vec3f;
+use vec3f::Vec3f;
 
 pub struct Aabb3f {
     pub min: Vec3f,
@@ -51,7 +51,7 @@ impl Aabb3f {
 
 #[test]
 fn test_aabb3f_contains_point() {
-    use vector::ZERO_3F;
+    use vec3f::ZERO_3F;
     assert!(!Aabb3f::new().contains_point(ZERO_3F));
     assert!(Aabb3f::from_point(ZERO_3F).contains_point(ZERO_3F));
 }

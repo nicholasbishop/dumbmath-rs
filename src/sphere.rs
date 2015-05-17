@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use vector;
+use vec3f;
 
 /// Sphere represented by a center and radius
 #[derive(Clone, Copy, PartialEq)]
 pub struct Sphere3f {
-    pub center: vector::Vec3f,
+    pub center: vec3f::Vec3f,
     pub radius: f32
 }
 
 /// Sphere centered at (0.0, 0.0, 0.0) with a radius of 1.0
-pub const UNIT: Sphere3f = Sphere3f { center: vector::ZERO_3F, radius: 1.0 };
+pub const UNIT: Sphere3f = Sphere3f { center: vec3f::ZERO_3F, radius: 1.0 };
 
 impl Sphere3f {
     /// Create a Sphere3f from center point and radius
-    pub fn new(center: vector::Vec3f, radius: f32) -> Sphere3f {
+    pub fn new(center: vec3f::Vec3f, radius: f32) -> Sphere3f {
         Sphere3f {
             center: center,
             radius: radius
@@ -35,7 +35,7 @@ impl Sphere3f {
 
     /// Create a Sphere3f centered at zero with given radius
     pub fn from_radius(radius: f32) -> Sphere3f {
-        Sphere3f::new(vector::ZERO_3F, radius)
+        Sphere3f::new(vec3f::ZERO_3F, radius)
     }
 
     /// Squared radius of the sphere
@@ -46,7 +46,7 @@ impl Sphere3f {
 
 #[test]
 fn test_sphere3f_create() {
-    Sphere3f::new(vector::vec3f(1, 2, 3), 4.0);
+    Sphere3f::new(vec3f::vec3f(1, 2, 3), 4.0);
     Sphere3f::from_radius(1.0);
 }
 
