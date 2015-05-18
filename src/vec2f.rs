@@ -46,6 +46,14 @@ impl Vec2f {
         Vec3f::new(self.x, self.y, 0.0)
     }
 
+    pub fn distance_squared(self, other: Vec2f) -> f32 {
+        (self - other).magnitude_squared()
+    }
+
+    pub fn distance(self, other: Vec2f) -> f32 {
+        self.distance_squared(other).sqrt()
+    }
+
     pub fn magnitude_squared(self) -> f32 {
         self.dot(self)
     }
