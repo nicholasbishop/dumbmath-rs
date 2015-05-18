@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Line2f",""],["Vec2f","Vector with two f32 components"]],"fn":[["vec2f","Create a Vec2f from x and y inputs"]]});

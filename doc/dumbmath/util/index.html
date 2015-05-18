@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `range_clamp` fn in crate `dumbmath`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, range_clamp">
+    <meta name="description" content="API documentation for the Rust `util` mod in crate `dumbmath`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, util">
 
-    <title>dumbmath::range::range_clamp - Rust</title>
+    <title>dumbmath::util - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>range</a></p><script>window.sidebarCurrent = {name: 'range_clamp', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>dumbmath</a></p><script>window.sidebarCurrent = {name: 'util', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,13 +40,19 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>dumbmath</a>::<wbr><a href='index.html'>range</a>::<wbr><a class='fn' href=''>range_clamp</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>dumbmath</a>::<wbr><a class='mod' href=''>util</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-3238' href='../../src/dumbmath/range.rs.html#74-86'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn range_clamp&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Sub.html' title='core::ops::Sub'>Sub</a>&lt;Output=T&gt;&gt;(a: <a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;T&gt;, b: <a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;T&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../dumbmath/range/struct.InclusiveRange.html' title='dumbmath::range::InclusiveRange'>InclusiveRange</a>&lt;T&gt;&gt;</pre><div class='docblock'><p>Create range covering the overlap between two ranges, or None if
-there is no overlap.</p>
-</div></section>
+        </span><a id='src-3988' href='../../src/dumbmath/util.rs.html#15-31'>[src]</a></span></h1>
+<h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.CastF32.html'
+                               title='dumbmath::util::CastF32'>CastF32</a></td>
+                        <td class='docblock short'><p>Convert a numeric type to an f32</p>
+</td>
+                    </tr>
+                </table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

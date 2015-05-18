@@ -112,21 +112,21 @@
 <span class='comment'>// See the License for the specific language governing permissions and</span>
 <span class='comment'>// limitations under the License.</span>
 
-<span class='kw'>use</span> <span class='ident'>vector</span>;
+<span class='kw'>use</span> <span class='ident'>vec3f</span>;
 
 <span class='doccomment'>/// Sphere represented by a center and radius</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Sphere3f</span> {
-    <span class='kw'>pub</span> <span class='ident'>center</span>: <span class='ident'>vector</span>::<span class='ident'>Vec3f</span>,
+    <span class='kw'>pub</span> <span class='ident'>center</span>: <span class='ident'>vec3f</span>::<span class='ident'>Vec3f</span>,
     <span class='kw'>pub</span> <span class='ident'>radius</span>: <span class='ident'>f32</span>
 }
 
 <span class='doccomment'>/// Sphere centered at (0.0, 0.0, 0.0) with a radius of 1.0</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>UNIT</span>: <span class='ident'>Sphere3f</span> <span class='op'>=</span> <span class='ident'>Sphere3f</span> { <span class='ident'>center</span>: <span class='ident'>vector</span>::<span class='ident'>ZERO_3F</span>, <span class='ident'>radius</span>: <span class='number'>1.0</span> };
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>UNIT</span>: <span class='ident'>Sphere3f</span> <span class='op'>=</span> <span class='ident'>Sphere3f</span> { <span class='ident'>center</span>: <span class='ident'>vec3f</span>::<span class='ident'>ZERO_3F</span>, <span class='ident'>radius</span>: <span class='number'>1.0</span> };
 
 <span class='kw'>impl</span> <span class='ident'>Sphere3f</span> {
     <span class='doccomment'>/// Create a Sphere3f from center point and radius</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>center</span>: <span class='ident'>vector</span>::<span class='ident'>Vec3f</span>, <span class='ident'>radius</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Sphere3f</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>center</span>: <span class='ident'>vec3f</span>::<span class='ident'>Vec3f</span>, <span class='ident'>radius</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Sphere3f</span> {
         <span class='ident'>Sphere3f</span> {
             <span class='ident'>center</span>: <span class='ident'>center</span>,
             <span class='ident'>radius</span>: <span class='ident'>radius</span>
@@ -135,7 +135,7 @@
 
     <span class='doccomment'>/// Create a Sphere3f centered at zero with given radius</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_radius</span>(<span class='ident'>radius</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Sphere3f</span> {
-        <span class='ident'>Sphere3f</span>::<span class='ident'>new</span>(<span class='ident'>vector</span>::<span class='ident'>ZERO_3F</span>, <span class='ident'>radius</span>)
+        <span class='ident'>Sphere3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>::<span class='ident'>ZERO_3F</span>, <span class='ident'>radius</span>)
     }
 
     <span class='doccomment'>/// Squared radius of the sphere</span>
@@ -146,7 +146,7 @@
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_sphere3f_create</span>() {
-    <span class='ident'>Sphere3f</span>::<span class='ident'>new</span>(<span class='ident'>vector</span>::<span class='ident'>vec3f</span>(<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>), <span class='number'>4.0</span>);
+    <span class='ident'>Sphere3f</span>::<span class='ident'>new</span>(<span class='ident'>vec3f</span>::<span class='ident'>vec3f</span>(<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>), <span class='number'>4.0</span>);
     <span class='ident'>Sphere3f</span>::<span class='ident'>from_radius</span>(<span class='number'>1.0</span>);
 }
 

@@ -174,7 +174,7 @@
 <span class='comment'>// limitations under the License.</span>
 
 <span class='kw'>use</span> <span class='ident'>sphere</span>::<span class='ident'>Sphere3f</span>;
-<span class='kw'>use</span> <span class='ident'>vector</span>::<span class='ident'>Vec3f</span>;
+<span class='kw'>use</span> <span class='ident'>vec3f</span>::<span class='ident'>Vec3f</span>;
 
 <span class='doccomment'>/// Calculate closest point on triangle to an input point</span>
 <span class='kw'>fn</span> <span class='ident'>triangle_closest_point_to_point</span>(<span class='ident'>triangle</span>: [<span class='ident'>Vec3f</span>; <span class='number'>3</span>], <span class='ident'>p</span>: <span class='ident'>Vec3f</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
@@ -256,7 +256,7 @@
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_intersect_sphere_triangle</span>() {
     <span class='kw'>use</span> <span class='ident'>sphere</span>;
-    <span class='kw'>use</span> <span class='ident'>vector</span>::{<span class='ident'>vec3f</span>, <span class='ident'>ZERO_3F</span>};
+    <span class='kw'>use</span> <span class='ident'>vec3f</span>::{<span class='ident'>vec3f</span>, <span class='ident'>ZERO_3F</span>};
 
     <span class='kw'>let</span> <span class='ident'>triangle</span> <span class='op'>=</span> [
         <span class='ident'>vec3f</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>),

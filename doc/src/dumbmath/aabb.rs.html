@@ -113,7 +113,7 @@
 <span class='comment'>// limitations under the License.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>f32</span>;
-<span class='kw'>use</span> <span class='ident'>vector</span>::<span class='ident'>Vec3f</span>;
+<span class='kw'>use</span> <span class='ident'>vec3f</span>::<span class='ident'>Vec3f</span>;
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Aabb3f</span> {
     <span class='kw'>pub</span> <span class='ident'>min</span>: <span class='ident'>Vec3f</span>,
@@ -151,7 +151,7 @@
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>test_aabb3f_contains_point</span>() {
-    <span class='kw'>use</span> <span class='ident'>vector</span>::<span class='ident'>ZERO_3F</span>;
+    <span class='kw'>use</span> <span class='ident'>vec3f</span>::<span class='ident'>ZERO_3F</span>;
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>Aabb3f</span>::<span class='ident'>new</span>().<span class='ident'>contains_point</span>(<span class='ident'>ZERO_3F</span>));
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>Aabb3f</span>::<span class='ident'>from_point</span>(<span class='ident'>ZERO_3F</span>).<span class='ident'>contains_point</span>(<span class='ident'>ZERO_3F</span>));
 }
