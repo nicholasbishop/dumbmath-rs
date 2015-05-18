@@ -167,8 +167,45 @@
 <span id="125">125</span>
 <span id="126">126</span>
 <span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
+<span class='comment'>//</span>
+<span class='comment'>// Orientation code adapted from &quot;Real-Time Collision Detection&quot; by</span>
+<span class='comment'>// Christer Ericson, published by Morgan Kaufmann Publishers,</span>
+<span class='comment'>// Copyright 2005 Elsevier Inc</span>
 <span class='comment'>//</span>
 <span class='comment'>// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class='comment'>// you may not use this file except in compliance with the License.</span>
@@ -214,6 +251,14 @@
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>vec3f</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec3f</span> {
         <span class='ident'>Vec3f</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>x</span>, <span class='self'>self</span>.<span class='ident'>y</span>, <span class='number'>0.0</span>)
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>distance_squared</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Vec2f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        (<span class='self'>self</span> <span class='op'>-</span> <span class='ident'>other</span>).<span class='ident'>magnitude_squared</span>()
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>distance</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Vec2f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='self'>self</span>.<span class='ident'>distance_squared</span>(<span class='ident'>other</span>).<span class='ident'>sqrt</span>()
     }
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>magnitude_squared</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
@@ -263,6 +308,11 @@
     }
 }
 
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>detf_2x2</span>(<span class='ident'>top_left</span>: <span class='ident'>f32</span>, <span class='ident'>top_right</span>: <span class='ident'>f32</span>,
+                <span class='ident'>bot_left</span>: <span class='ident'>f32</span>, <span class='ident'>bot_right</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+    <span class='ident'>top_left</span> <span class='op'>*</span> <span class='ident'>bot_right</span> <span class='op'>-</span> <span class='ident'>top_right</span> <span class='op'>*</span> <span class='ident'>bot_left</span>
+}
+
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Line2f</span> {
     <span class='kw'>pub</span> <span class='ident'>points</span>: (<span class='ident'>Vec2f</span>, <span class='ident'>Vec2f</span>)
@@ -282,6 +332,22 @@
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cart_from_para</span>(<span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2f</span> {
         <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>.<span class='ident'>lerp</span>(<span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>1</span>, <span class='ident'>t</span>)
+    }
+
+    <span class='doccomment'>/// If result is greater than zero `point` lies to the left of the</span>
+    <span class='doccomment'>/// line. If result is less than zero `point` lies to the</span>
+    <span class='doccomment'>/// right. If result is zero, the point is on the line.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// The value is also twice the signed area of the triangle</span>
+    <span class='doccomment'>/// `(points.0, points.1, point)` (positive if counterclockwise,</span>
+    <span class='doccomment'>/// otherwise negative).</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Adapted from &quot;Real-Time Collision Detection&quot; by Christer</span>
+    <span class='doccomment'>/// Ericson, published by Morgan Kaufmann Publishers, Copyright</span>
+    <span class='doccomment'>/// 2005 Elsevier Inc</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>orient</span>(<span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec2f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='ident'>detf_2x2</span>(<span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>point</span>.<span class='ident'>x</span>, <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>point</span>.<span class='ident'>y</span>,
+                 <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>1</span>.<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>point</span>.<span class='ident'>x</span>, <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>1</span>.<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>point</span>.<span class='ident'>y</span>)
     }
 }
 
