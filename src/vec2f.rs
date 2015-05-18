@@ -127,6 +127,13 @@ impl Line2f {
         p0p.dot(p0p1) / p0p1.dot(p0p1)
     }
 
+    pub fn point_distance_squared(self, point: Vec2f) -> f32 {
+        // TODO(nicholasbishop): may be a more way to calculate this
+        let para = self.closest_parametric_point(point);
+        let cart = self.cart_from_para(para);
+        cart.distance_squared(point)
+    }
+
     pub fn cart_from_para(self, t: f32) -> Vec2f {
         self.points.0.lerp(self.points.1, t)
     }
