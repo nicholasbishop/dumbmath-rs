@@ -1,5 +1,9 @@
 // Copyright 2015 Nicholas Bishop
 //
+// Orientation code adapted from "Real-Time Collision Detection" by
+// Christer Ericson, published by Morgan Kaufmann Publishers,
+// Copyright 2005 Elsevier Inc
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -101,6 +105,11 @@ impl Div<f32> for Vec2f {
     }
 }
 
+pub fn detf_2x2(top_left: f32, top_right: f32,
+                bot_left: f32, bot_right: f32) -> f32 {
+    top_left * bot_right - top_right * bot_left
+}
+
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Line2f {
     pub points: (Vec2f, Vec2f)
@@ -120,6 +129,22 @@ impl Line2f {
 
     pub fn cart_from_para(self, t: f32) -> Vec2f {
         self.points.0.lerp(self.points.1, t)
+    }
+
+    /// If result is greater than zero `point` lies to the left of the
+    /// line. If result is less than zero `point` lies to the
+    /// right. If result is zero, the point is on the line.
+    ///
+    /// The value is also twice the signed area of the triangle
+    /// `(points.0, points.1, point)` (positive if counterclockwise,
+    /// otherwise negative).
+    ///
+    /// Adapted from "Real-Time Collision Detection" by Christer
+    /// Ericson, published by Morgan Kaufmann Publishers, Copyright
+    /// 2005 Elsevier Inc
+    pub fn orient(self, point: Vec2f) -> f32 {
+        detf_2x2(self.points.0.x - point.x, self.points.0.y - point.y,
+                 self.points.1.x - point.x, self.points.1.y - point.y)
     }
 }
 
