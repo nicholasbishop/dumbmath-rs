@@ -120,6 +120,10 @@ impl Line2f {
         Line2f { points: (a, b) }
     }
 
+    pub fn reverse(self) -> Line2f {
+        Line2f::new(self.points.1, self.points.0)
+    }
+
     pub fn closest_parametric_point(self, point: Vec2f) -> f32 {
         let p0p = point - self.points.0;
         let p0p1 = self.points.1 - self.points.0;
