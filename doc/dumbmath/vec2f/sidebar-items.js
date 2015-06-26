@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Line2f",""],["Vec2f","Vector with two f32 components"]],"fn":[["detf_2x2",""],["vec2f","Create a Vec2f from x and y inputs"]]});
+initSidebarItems({"fn":[["detf_2x2",""],["vec2f","Create a Vec2f from x and y inputs"]],"struct":[["Line2f",""],["Vec2f","Vector with two f32 components"]]});

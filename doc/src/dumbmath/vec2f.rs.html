@@ -200,6 +200,17 @@
 <span id="158">158</span>
 <span id="159">159</span>
 <span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2015 Nicholas Bishop</span>
 <span class='comment'>//</span>
@@ -323,11 +334,22 @@
         <span class='ident'>Line2f</span> { <span class='ident'>points</span>: (<span class='ident'>a</span>, <span class='ident'>b</span>) }
     }
 
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reverse</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Line2f</span> {
+        <span class='ident'>Line2f</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>1</span>, <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>)
+    }
+
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>closest_parametric_point</span>(<span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec2f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
         <span class='kw'>let</span> <span class='ident'>p0p</span> <span class='op'>=</span> <span class='ident'>point</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>;
         <span class='kw'>let</span> <span class='ident'>p0p1</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>1</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='number'>0</span>;
 
         <span class='ident'>p0p</span>.<span class='ident'>dot</span>(<span class='ident'>p0p1</span>) <span class='op'>/</span> <span class='ident'>p0p1</span>.<span class='ident'>dot</span>(<span class='ident'>p0p1</span>)
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>point_distance_squared</span>(<span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Vec2f</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+        <span class='comment'>// TODO(nicholasbishop): may be a more way to calculate this</span>
+        <span class='kw'>let</span> <span class='ident'>para</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>closest_parametric_point</span>(<span class='ident'>point</span>);
+        <span class='kw'>let</span> <span class='ident'>cart</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cart_from_para</span>(<span class='ident'>para</span>);
+        <span class='ident'>cart</span>.<span class='ident'>distance_squared</span>(<span class='ident'>point</span>)
     }
 
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cart_from_para</span>(<span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec2f</span> {
@@ -394,6 +416,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

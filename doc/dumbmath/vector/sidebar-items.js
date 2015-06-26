@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Line2f",""],["Vec2f","Vector with two f32 components"],["Vec3f","Vector with three f32 components"]],"trait":[["CastF32","Convert a numeric type to an f32"]],"constant":[["ZERO_3F","Vec3f(0.0, 0.0, 0.0)"]],"fn":[["vec2f","Create a Vec2f from x and y inputs"],["vec3f","Create a Vec3f from x, y, and z inputs"]]});

@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["vec3f","Create a Vec3f from x, y, and z inputs"]],"constant":[["ZERO_3F","Vec3f(0.0, 0.0, 0.0)"]],"struct":[["Vec3f","Vector with three f32 components"]]});
+initSidebarItems({"constant":[["ZERO_3F","Vec3f(0.0, 0.0, 0.0)"]],"fn":[["vec3f","Create a Vec3f from x, y, and z inputs"]],"struct":[["Vec3f","Vector with three f32 components"]]});
